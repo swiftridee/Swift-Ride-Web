@@ -4,14 +4,22 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import VehicleCard from "@/components/VehicleCard";
 import VehicleFilters from "@/components/VehicleFilters";
+import { Pagination } from "@/components/ui/pagination";
 import { VehicleType } from "@/types";
 import { useVehicles } from "@/hooks/useVehicles";
 
 const Cars = () => {
-  const { vehicles: allVehicles, loading } = useVehicles({
+  const { 
+    vehicles: allVehicles, 
+    loading, 
+    pagination, 
+    setPage 
+  } = useVehicles({
     vehicleType: "Car",
+    limit: 5,
   });
   const [filteredVehicles, setFilteredVehicles] = useState<VehicleType[]>([]);
+  const [hasAppliedFilters, setHasAppliedFilters] = useState(false);
 
   // Extract unique brands and locations
   const brands = [...new Set(allVehicles.map((car) => car.brand))];
@@ -56,12 +64,21 @@ const Cars = () => {
     }
 
     setFilteredVehicles(filtered);
+    setHasAppliedFilters(true);
   };
 
   // Initialize filtered vehicles when allVehicles changes
   useEffect(() => {
     setFilteredVehicles(allVehicles);
+    setHasAppliedFilters(false);
   }, [allVehicles]);
+
+  const handlePageChange = (page: number) => {
+    setPage(page);
+  };
+
+  // Determine which vehicles to display
+  const displayVehicles = hasAppliedFilters ? filteredVehicles : allVehicles;
 
   return (
     <>
@@ -101,7 +118,7 @@ const Cars = () => {
                     <div className="inline-block animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
                     <p className="mt-4 text-gray-600">Loading cars...</p>
                   </div>
-                ) : filteredVehicles.length === 0 ? (
+                ) : !loading && displayVehicles.length === 0 ? (
                   <div className="py-12 text-center">
                     <div className="text-3xl text-gray-400 mb-4">
                       <i className="fas fa-search"></i>
@@ -110,15 +127,31 @@ const Cars = () => {
                       No cars found
                     </h3>
                     <p className="text-gray-600">
-                      Try adjusting your filters to find available cars.
+                      {hasAppliedFilters 
+                        ? "Try adjusting your filters to find available cars."
+                        : "No cars are currently available."
+                      }
                     </p>
                   </div>
                 ) : (
-                  <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-                    {filteredVehicles.map((car) => (
-                      <VehicleCard key={car.id} vehicle={car} />
-                    ))}
-                  </div>
+                  <>
+                    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+                      {displayVehicles.map((car) => (
+                        <VehicleCard key={car._id} vehicle={car} />
+                      ))}
+                    </div>
+                    
+                    {/* Pagination - Only show when not filtering */}
+                    {!hasAppliedFilters && pagination.totalPages > 1 && (
+                      <div className="mt-8">
+                        <Pagination
+                          currentPage={pagination.currentPage}
+                          totalPages={pagination.totalPages}
+                          onPageChange={handlePageChange}
+                        />
+                      </div>
+                    )}
+                  </>
                 )}
               </div>
             </div>

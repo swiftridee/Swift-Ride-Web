@@ -4,14 +4,22 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import VehicleCard from "@/components/VehicleCard";
 import VehicleFilters from "@/components/VehicleFilters";
+import { Pagination } from "@/components/ui/pagination";
 import { VehicleType } from "@/types";
 import { useVehicles } from "@/hooks/useVehicles";
 
 const Coasters = () => {
-  const { vehicles: allVehicles, loading } = useVehicles({
+  const { 
+    vehicles: allVehicles, 
+    loading, 
+    pagination, 
+    setPage 
+  } = useVehicles({
     vehicleType: "Coaster",
+    limit: 5,
   });
   const [filteredVehicles, setFilteredVehicles] = useState<VehicleType[]>([]);
+  const [hasAppliedFilters, setHasAppliedFilters] = useState(false);
 
   // Extract unique brands and locations
   const brands = [...new Set(allVehicles.map((coaster) => coaster.brand))];
@@ -58,12 +66,21 @@ const Coasters = () => {
     }
 
     setFilteredVehicles(filtered);
+    setHasAppliedFilters(true);
   };
 
   // Initialize filtered vehicles when allVehicles changes
   useEffect(() => {
     setFilteredVehicles(allVehicles);
+    setHasAppliedFilters(false);
   }, [allVehicles]);
+
+  const handlePageChange = (page: number) => {
+    setPage(page);
+  };
+
+  // Determine which vehicles to display
+  const displayVehicles = hasAppliedFilters ? filteredVehicles : allVehicles;
 
   return (
     <>
@@ -71,7 +88,7 @@ const Coasters = () => {
         <title>Coasters for Rent - Swift Ride</title>
         <meta
           name="description"
-          content="Browse and book our selection of quality coasters for rent. Perfect for small to medium sized groups."
+          content="Browse and book our selection of quality coasters for rent. Perfect for medium to large groups and tours."
         />
       </Helmet>
 
@@ -82,9 +99,8 @@ const Coasters = () => {
           <div className="py-8">
             <h1 className="text-3xl font-bold mb-2">Coasters for Rent</h1>
             <p className="text-gray-600 mb-6">
-              Our coasters are perfect for small to medium sized groups. Choose
-              from top brands like Toyota, Mitsubishi, and Nissan for a
-              comfortable journey.
+              Our coasters are perfect for medium to large groups and tours.
+              Spacious and comfortable for extended journeys.
             </p>
 
             <div className="lg:flex gap-6">
@@ -103,7 +119,7 @@ const Coasters = () => {
                     <div className="inline-block animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
                     <p className="mt-4 text-gray-600">Loading coasters...</p>
                   </div>
-                ) : filteredVehicles.length === 0 ? (
+                ) : !loading && displayVehicles.length === 0 ? (
                   <div className="py-12 text-center">
                     <div className="text-3xl text-gray-400 mb-4">
                       <i className="fas fa-search"></i>
@@ -112,15 +128,31 @@ const Coasters = () => {
                       No coasters found
                     </h3>
                     <p className="text-gray-600">
-                      Try adjusting your filters to find available coasters.
+                      {hasAppliedFilters 
+                        ? "Try adjusting your filters to find available coasters."
+                        : "No coasters are currently available."
+                      }
                     </p>
                   </div>
                 ) : (
-                  <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-                    {filteredVehicles.map((coaster) => (
-                      <VehicleCard key={coaster.id} vehicle={coaster} />
-                    ))}
-                  </div>
+                  <>
+                    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+                      {displayVehicles.map((coaster) => (
+                        <VehicleCard key={coaster._id} vehicle={coaster} />
+                      ))}
+                    </div>
+                    
+                    {/* Pagination - Only show when not filtering */}
+                    {!hasAppliedFilters && pagination.totalPages > 1 && (
+                      <div className="mt-8">
+                        <Pagination
+                          currentPage={pagination.currentPage}
+                          totalPages={pagination.totalPages}
+                          onPageChange={handlePageChange}
+                        />
+                      </div>
+                    )}
+                  </>
                 )}
               </div>
             </div>

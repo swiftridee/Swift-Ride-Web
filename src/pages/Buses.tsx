@@ -4,14 +4,22 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import VehicleCard from "@/components/VehicleCard";
 import VehicleFilters from "@/components/VehicleFilters";
+import { Pagination } from "@/components/ui/pagination";
 import { VehicleType } from "@/types";
 import { useVehicles } from "@/hooks/useVehicles";
 
 const Buses = () => {
-  const { vehicles: allVehicles, loading } = useVehicles({
+  const { 
+    vehicles: allVehicles, 
+    loading, 
+    pagination, 
+    setPage 
+  } = useVehicles({
     vehicleType: "Bus",
+    limit: 5,
   });
   const [filteredVehicles, setFilteredVehicles] = useState<VehicleType[]>([]);
+  const [hasAppliedFilters, setHasAppliedFilters] = useState(false);
 
   // Extract unique brands and locations
   const brands = [...new Set(allVehicles.map((bus) => bus.brand))];
@@ -56,12 +64,21 @@ const Buses = () => {
     }
 
     setFilteredVehicles(filtered);
+    setHasAppliedFilters(true);
   };
 
   // Initialize filtered vehicles when allVehicles changes
   useEffect(() => {
     setFilteredVehicles(allVehicles);
+    setHasAppliedFilters(false);
   }, [allVehicles]);
+
+  const handlePageChange = (page: number) => {
+    setPage(page);
+  };
+
+  // Determine which vehicles to display
+  const displayVehicles = hasAppliedFilters ? filteredVehicles : allVehicles;
 
   return (
     <>
@@ -69,7 +86,7 @@ const Buses = () => {
         <title>Buses for Rent - Swift Ride</title>
         <meta
           name="description"
-          content="Browse and book our selection of quality buses for rent. Perfect for large groups, events, or corporate transportation."
+          content="Browse and book our selection of quality buses for rent. Perfect for group travel, events, and corporate transportation."
         />
       </Helmet>
 
@@ -80,9 +97,8 @@ const Buses = () => {
           <div className="py-8">
             <h1 className="text-3xl font-bold mb-2">Buses for Rent</h1>
             <p className="text-gray-600 mb-6">
-              Our buses are perfect for large groups, events, or corporate
-              transportation. Choose from top brands like Yutong, Hino, and
-              Isuzu for a comfortable journey.
+              Our buses are perfect for group travel, events, and corporate
+              transportation. Spacious and comfortable for large groups.
             </p>
 
             <div className="lg:flex gap-6">
@@ -101,7 +117,7 @@ const Buses = () => {
                     <div className="inline-block animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
                     <p className="mt-4 text-gray-600">Loading buses...</p>
                   </div>
-                ) : filteredVehicles.length === 0 ? (
+                ) : !loading && displayVehicles.length === 0 ? (
                   <div className="py-12 text-center">
                     <div className="text-3xl text-gray-400 mb-4">
                       <i className="fas fa-search"></i>
@@ -110,15 +126,31 @@ const Buses = () => {
                       No buses found
                     </h3>
                     <p className="text-gray-600">
-                      Try adjusting your filters to find available buses.
+                      {hasAppliedFilters 
+                        ? "Try adjusting your filters to find available buses."
+                        : "No buses are currently available."
+                      }
                     </p>
                   </div>
                 ) : (
-                  <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-                    {filteredVehicles.map((bus) => (
-                      <VehicleCard key={bus.id} vehicle={bus} />
-                    ))}
-                  </div>
+                  <>
+                    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+                      {displayVehicles.map((bus) => (
+                        <VehicleCard key={bus._id} vehicle={bus} />
+                      ))}
+                    </div>
+                    
+                    {/* Pagination - Only show when not filtering */}
+                    {!hasAppliedFilters && pagination.totalPages > 1 && (
+                      <div className="mt-8">
+                        <Pagination
+                          currentPage={pagination.currentPage}
+                          totalPages={pagination.totalPages}
+                          onPageChange={handlePageChange}
+                        />
+                      </div>
+                    )}
+                  </>
                 )}
               </div>
             </div>
