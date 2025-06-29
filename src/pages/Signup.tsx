@@ -208,7 +208,7 @@ const Signup = () => {
                   value={formData.cnic}
                   onChange={handleCNICChange}
                   className="pl-10 w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-primary focus:border-primary"
-                  placeholder="Enter your 13-digit CNIC (e.g., 12345-1234567-1)"
+                  placeholder="Enter your 13-digit CNIC"
                   required
                   maxLength={15}
                 />
