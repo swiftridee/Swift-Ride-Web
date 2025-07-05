@@ -16,7 +16,7 @@ const Profile = () => {
     name: user?.name || "",
     email: user?.email || "",
     dob: "",
-    gender: "male",
+    gender: "male" as "male" | "female" | "other",
     cnic: "",
     province: "",
     city: "",
@@ -25,6 +25,9 @@ const Profile = () => {
   
   const [isLoading, setIsLoading] = useState(false);
   const [availableCities, setAvailableCities] = useState<string[]>([]);
+  const [profileImage, setProfileImage] = useState<string | null>(user?.profile?.profileImage || null);
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [isUploading, setIsUploading] = useState(false);
   
   // Redirect if not logged in
   useEffect(() => {
@@ -37,6 +40,11 @@ const Profile = () => {
           ...prev,
           ...user.profile,
         }));
+        
+        // Set profile image if available
+        if (user.profile.profileImage) {
+          setProfileImage(user.profile.profileImage);
+        }
         
         // Set available cities based on province
         if (user.profile.province) {
@@ -77,6 +85,37 @@ const Profile = () => {
       setFormData(prev => ({ ...prev, [name]: value }));
     }
   };
+
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    // Validate file type
+    if (!file.type.startsWith('image/')) {
+      toast.error('Please select a valid image file');
+      return;
+    }
+
+    // Validate file size (max 5MB)
+    if (file.size > 5 * 1024 * 1024) {
+      toast.error('Image size should be less than 5MB');
+      return;
+    }
+
+    setImageFile(file);
+    
+    // Create preview URL
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      setProfileImage(event.target?.result as string);
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const removeImage = () => {
+    setProfileImage(null);
+    setImageFile(null);
+  };
   
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -94,11 +133,18 @@ const Profile = () => {
     
     setIsLoading(true);
     
-    // Simulate API call
+    // Simulate API call with image upload
     setTimeout(() => {
       if (user) {
+        // In a real app, you would upload the image to a server first
+        // and then save the URL to the user profile
+        const profileData = {
+          ...formData,
+          profileImage: profileImage || undefined
+        };
+        
         updateUser({
-          profile: formData
+          profile: profileData
         });
         toast.success("Profile updated successfully");
       }
@@ -130,13 +176,43 @@ const Profile = () => {
               
               <form onSubmit={handleSubmit} className="p-6">
                 <div className="flex items-center space-x-8 mb-8">
-                  <div className="w-24 h-24 bg-primary/10 text-primary rounded-full flex items-center justify-center">
-                    <span className="text-4xl font-bold">{user.name.charAt(0)}</span>
+                  <div className="relative">
+                    <div className="w-24 h-24 rounded-full overflow-hidden bg-primary/10 flex items-center justify-center">
+                      {profileImage ? (
+                        <img 
+                          src={profileImage} 
+                          alt="Profile" 
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <span className="text-4xl font-bold text-primary">{user.name.charAt(0)}</span>
+                      )}
+                    </div>
+                    
+                    {/* Upload button overlay */}
+                    <label 
+                      htmlFor="profile-image" 
+                      className="absolute bottom-0 right-0 w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center cursor-pointer hover:bg-primary/80 transition-colors shadow-lg"
+                      title="Upload profile picture"
+                    >
+                      <i className="fas fa-camera text-sm"></i>
+                    </label>
+                    
+                    <input
+                      id="profile-image"
+                      type="file"
+                      accept="image/*"
+                      onChange={handleImageUpload}
+                      className="hidden"
+                    />
                   </div>
                   
                   <div>
                     <h2 className="text-xl font-semibold">{user.name}</h2>
                     <p className="text-gray-600">{user.email}</p>
+                    <p className="text-sm text-gray-500 mt-1">
+                      Click the camera icon to upload a profile picture
+                    </p>
                   </div>
                 </div>
                 

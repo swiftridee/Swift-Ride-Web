@@ -18,6 +18,7 @@ export interface UserProfile {
   province?: string;
   city?: string;
   postalCode?: string;
+  profileImage?: string;
 }
 
 // Vehicle related types
