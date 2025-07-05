@@ -1,4 +1,3 @@
-
 import { Link, useLocation } from "react-router-dom";
 import { useState } from "react";
 import { toast } from "@/components/ui/sonner";
@@ -23,9 +22,9 @@ const Footer = () => {
     }
   };
 
-  // Scroll to top function for homepage link
-  const scrollToTop = (e: React.MouseEvent) => {
-    if (location.pathname === '/') {
+  // Scroll to top function for homepage and other links
+  const scrollToTop = (e: React.MouseEvent, path: string) => {
+    if (location.pathname === path) {
       e.preventDefault();
       window.scrollTo({
         top: 0,
@@ -65,13 +64,31 @@ const Footer = () => {
             <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
             <ul className="space-y-3">
               <li>
-                <Link to="/" className="text-gray-400 hover:text-white transition-colors">Home</Link>
+                <Link 
+                  to="/" 
+                  onClick={e => scrollToTop(e, '/')} 
+                  className="text-gray-400 hover:text-white transition-colors"
+                >
+                  Home
+                </Link>
               </li>
               <li>
-                <Link to="/about" className="text-gray-400 hover:text-white transition-colors">About Us</Link>
+                <Link 
+                  to="/about" 
+                  onClick={e => scrollToTop(e, '/about')} 
+                  className="text-gray-400 hover:text-white transition-colors"
+                >
+                  About Us
+                </Link>
               </li>
               <li>
-                <Link to="/contact" className="text-gray-400 hover:text-white transition-colors">Contact</Link>
+                <Link 
+                  to="/contact" 
+                  onClick={e => scrollToTop(e, '/contact')} 
+                  className="text-gray-400 hover:text-white transition-colors"
+                >
+                  Contact
+                </Link>
               </li>
             </ul>
           </div>
@@ -81,16 +98,40 @@ const Footer = () => {
             <h3 className="text-lg font-semibold mb-4">Vehicle Categories</h3>
             <ul className="space-y-3">
               <li>
-                <Link to="/cars" className="text-gray-400 hover:text-white transition-colors">Cars</Link>
+                <Link 
+                  to="/cars" 
+                  onClick={e => scrollToTop(e, '/cars')} 
+                  className="text-gray-400 hover:text-white transition-colors"
+                >
+                  Cars
+                </Link>
               </li>
               <li>
-                <Link to="/buses" className="text-gray-400 hover:text-white transition-colors">Buses</Link>
+                <Link 
+                  to="/buses" 
+                  onClick={e => scrollToTop(e, '/buses')} 
+                  className="text-gray-400 hover:text-white transition-colors"
+                >
+                  Buses
+                </Link>
               </li>
               <li>
-                <Link to="/minibuses" className="text-gray-400 hover:text-white transition-colors">Mini Buses</Link>
+                <Link 
+                  to="/minibuses" 
+                  onClick={e => scrollToTop(e, '/minibuses')} 
+                  className="text-gray-400 hover:text-white transition-colors"
+                >
+                  Mini Buses
+                </Link>
               </li>
               <li>
-                <Link to="/coasters" className="text-gray-400 hover:text-white transition-colors">Coasters</Link>
+                <Link 
+                  to="/coasters" 
+                  onClick={e => scrollToTop(e, '/coasters')} 
+                  className="text-gray-400 hover:text-white transition-colors"
+                >
+                  Coasters
+                </Link>
               </li>
             </ul>
           </div>
@@ -100,10 +141,22 @@ const Footer = () => {
             <h3 className="text-lg font-semibold mb-4">Legal</h3>
             <ul className="space-y-3">
               <li>
-                <Link to="/terms" className="text-gray-400 hover:text-white transition-colors">Terms & Conditions</Link>
+                <Link 
+                  to="/terms" 
+                  onClick={e => scrollToTop(e, '/terms')} 
+                  className="text-gray-400 hover:text-white transition-colors"
+                >
+                  Terms & Conditions
+                </Link>
               </li>
               <li>
-                <Link to="/privacy" className="text-gray-400 hover:text-white transition-colors">Privacy Policy</Link>
+                <Link 
+                  to="/privacy" 
+                  onClick={e => scrollToTop(e, '/privacy')} 
+                  className="text-gray-400 hover:text-white transition-colors"
+                >
+                  Privacy Policy
+                </Link>
               </li>
             </ul>
           </div>
@@ -134,7 +187,7 @@ const Footer = () => {
 
         {/* Copyright */}
         <div className="border-t border-gray-800 mt-12 pt-6 text-center text-gray-400">
-          <p>© 2025 <Link to="/" onClick={scrollToTop} className="hover:text-primary transition-colors">Swift Ride</Link>. All rights reserved.</p>
+          <p>© 2025 <Link to="/" onClick={e => scrollToTop(e, '/')} className="hover:text-primary transition-colors">Swift Ride</Link>. All rights reserved.</p>
         </div>
       </div>
     </footer>
