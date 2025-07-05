@@ -50,11 +50,12 @@ const Dashboard = () => {
   return (
     <>
       <Helmet>
-        <title>Dashboard - Swift Ride</title>
+        <title>Dashboard - Swift Ride | Manage Your Vehicle Rental Bookings</title>
         <meta
           name="description"
-          content="Manage your Swift Ride bookings and view your booking history."
+          content="Manage your Swift Ride bookings, view booking history, and track your vehicle rental activities. Access your upcoming, completed, and cancelled bookings."
         />
+        <meta name="keywords" content="Swift Ride dashboard, booking management, rental history, vehicle bookings, account dashboard" />
       </Helmet>
 
       <Navbar />

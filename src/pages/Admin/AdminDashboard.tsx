@@ -38,8 +38,9 @@ const AdminDashboard = () => {
   return (
     <>
       <Helmet>
-        <title>Admin Dashboard - Swift Ride</title>
-        <meta name="description" content="Admin dashboard for Swift Ride vehicle rental system" />
+        <title>Admin Dashboard - Swift Ride | Vehicle Rental Management System</title>
+        <meta name="description" content="Admin dashboard for Swift Ride vehicle rental system. Manage users, bookings, vehicles, and monitor system performance." />
+        <meta name="keywords" content="admin dashboard, Swift Ride admin, vehicle rental management, booking management, user management" />
       </Helmet>
 
       <div className="flex min-h-screen bg-gray-100">

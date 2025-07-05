@@ -113,8 +113,9 @@ const Profile = () => {
   return (
     <>
       <Helmet>
-        <title>Your Profile - Swift Ride</title>
-        <meta name="description" content="Edit your user profile on Swift Ride." />
+        <title>Your Profile - Swift Ride | Manage Your Account Information</title>
+        <meta name="description" content="Edit and manage your Swift Ride user profile. Update your personal information, contact details, and preferences for your vehicle rental account." />
+        <meta name="keywords" content="Swift Ride profile, account settings, user information, profile management, vehicle rental account" />
       </Helmet>
       
       <Navbar />

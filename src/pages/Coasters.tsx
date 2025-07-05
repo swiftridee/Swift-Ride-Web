@@ -85,11 +85,12 @@ const Coasters = () => {
   return (
     <>
       <Helmet>
-        <title>Coasters for Rent - Swift Ride</title>
+        <title>Coaster Rental Services - Swift Ride | Medium to Large Group Transportation</title>
         <meta
           name="description"
-          content="Browse and book our selection of quality coasters for rent. Perfect for medium to large groups and tours."
+          content="Rent coasters from Swift Ride for medium to large groups and tours. Spacious and comfortable transportation for extended journeys."
         />
+        <meta name="keywords" content="coaster rental, medium group transportation, large group travel, tour transportation, Swift Ride" />
       </Helmet>
 
       <Navbar />

@@ -7,8 +7,9 @@ const Privacy = () => {
   return (
     <>
       <Helmet>
-        <title>Privacy Policy - Swift Ride</title>
-        <meta name="description" content="Privacy policy for Swift Ride vehicle rental services." />
+        <title>Privacy Policy - Swift Ride | Data Protection & Privacy Information</title>
+        <meta name="description" content="Read Swift Ride's privacy policy to understand how we collect, use, and protect your personal information when using our vehicle rental services." />
+        <meta name="keywords" content="Swift Ride privacy policy, data protection, personal information, privacy rights, Swift Ride data policy" />
       </Helmet>
       
       <Navbar />

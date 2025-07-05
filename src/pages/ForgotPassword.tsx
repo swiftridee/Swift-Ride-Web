@@ -18,19 +18,20 @@ const ForgotPassword = () => {
     
     setLoading(true);
     
-    // Simulate API call
+    // Simulate API call to send OTP
     setTimeout(() => {
       setLoading(false);
       setSubmitted(true);
-      toast.success("Password reset instructions sent to your email");
+      toast.success("OTP sent to your email address");
     }, 1500);
   };
 
   return (
     <>
       <Helmet>
-        <title>Forgot Password - Swift Ride</title>
-        <meta name="description" content="Reset your Swift Ride account password." />
+        <title>Forgot Password - Swift Ride | Reset Your Account Password</title>
+        <meta name="description" content="Reset your Swift Ride account password securely. Enter your email to receive password reset instructions." />
+        <meta name="keywords" content="forgot password, password reset, Swift Ride account recovery, vehicle rental login" />
       </Helmet>
       
       <main className="min-h-screen flex items-center justify-center p-4 sm:p-6 bg-gray-50">
@@ -86,23 +87,29 @@ const ForgotPassword = () => {
               <div className="text-6xl text-green-500 mb-4">
                 <i className="fas fa-check-circle"></i>
               </div>
-              <h2 className="text-2xl font-bold mb-4">Check Your Email</h2>
+              <h2 className="text-2xl font-bold mb-4">OTP Sent Successfully</h2>
               <p className="text-gray-600 mb-6">
-                We've sent password reset instructions to:
+                We've sent a 6-digit OTP to:
                 <br />
                 <span className="font-medium">{email}</span>
               </p>
               <p className="text-gray-600 mb-8 text-sm">
-                If you don't see the email, please check your spam folder.
+                Please check your email and enter the OTP to continue.
               </p>
               <div className="space-y-4">
+                <Link 
+                  to={`/verify-otp?email=${encodeURIComponent(email)}`}
+                  className="btn-primary w-full block text-center"
+                >
+                  Enter OTP
+                </Link>
                 <button
                   onClick={() => setSubmitted(false)}
                   className="btn-outline w-full"
                 >
                   Try Another Email
                 </button>
-                <Link to="/login" className="btn-primary w-full block text-center">
+                <Link to="/login" className="text-primary hover:text-primary-dark text-sm">
                   Back to Login
                 </Link>
               </div>

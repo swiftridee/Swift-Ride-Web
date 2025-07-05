@@ -83,11 +83,12 @@ const Cars = () => {
   return (
     <>
       <Helmet>
-        <title>Cars for Rent - Swift Ride</title>
+        <title>Car Rental Services - Swift Ride | Quality Cars for Hire</title>
         <meta
           name="description"
-          content="Browse and book our selection of quality cars for rent. Perfect for personal travel, family trips, and business use."
+          content="Rent quality cars from Swift Ride for personal travel, family trips, and business use. Choose from top brands with flexible rental plans and competitive rates."
         />
+        <meta name="keywords" content="car rental, car hire, vehicle rental, personal car, business car, family car, Swift Ride" />
       </Helmet>
 
       <Navbar />

@@ -83,11 +83,12 @@ const Buses = () => {
   return (
     <>
       <Helmet>
-        <title>Buses for Rent - Swift Ride</title>
+        <title>Bus Rental Services - Swift Ride | Group Transportation Solutions</title>
         <meta
           name="description"
-          content="Browse and book our selection of quality buses for rent. Perfect for group travel, events, and corporate transportation."
+          content="Rent spacious buses from Swift Ride for group travel, events, and corporate transportation. Comfortable and reliable transportation for large groups."
         />
+        <meta name="keywords" content="bus rental, group transportation, corporate bus, event transportation, large group travel, Swift Ride" />
       </Helmet>
 
       <Navbar />

@@ -8,8 +8,9 @@ const NotFound = () => {
   return (
     <>
       <Helmet>
-        <title>Page Not Found - Swift Ride</title>
-        <meta name="description" content="The page you're looking for cannot be found." />
+        <title>Page Not Found - Swift Ride | 404 Error</title>
+        <meta name="description" content="The page you're looking for cannot be found. Return to Swift Ride's vehicle rental services." />
+        <meta name="keywords" content="404 error, page not found, Swift Ride, vehicle rental" />
       </Helmet>
       
       <Navbar />

@@ -316,12 +316,13 @@ const BookingPage = () => {
     <>
       <Helmet>
         <title>
-          Book {vehicle.brand} {vehicle.name} - Swift Ride
+          Book {vehicle.brand} {vehicle.name} - Swift Ride | Secure Vehicle Rental
         </title>
         <meta
           name="description"
-          content={`Book the ${vehicle.brand} ${vehicle.name} for your trip. Choose your rental plan and driver option.`}
+          content={`Book the ${vehicle.brand} ${vehicle.name} for your trip. Choose your rental plan, driver option, and complete your secure booking with Swift Ride.`}
         />
+        <meta name="keywords" content={`${vehicle.brand} ${vehicle.name} rental, vehicle booking, Swift Ride booking, ${vehicle.category} rental`} />
       </Helmet>
 
       <Navbar />

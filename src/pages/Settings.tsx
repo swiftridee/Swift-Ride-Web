@@ -92,8 +92,9 @@ const Settings = () => {
   return (
     <>
       <Helmet>
-        <title>Settings - Swift Ride</title>
-        <meta name="description" content="Manage your account settings on Swift Ride." />
+        <title>Settings - Swift Ride | Manage Your Account Preferences</title>
+        <meta name="description" content="Manage your Swift Ride account settings including password changes, email preferences, and notification settings for your vehicle rental account." />
+        <meta name="keywords" content="Swift Ride settings, account preferences, password change, email notifications, account security" />
       </Helmet>
       
       <Navbar />

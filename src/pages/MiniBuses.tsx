@@ -83,11 +83,12 @@ const MiniBuses = () => {
   return (
     <>
       <Helmet>
-        <title>Mini Buses for Rent - Swift Ride</title>
+        <title>Mini Bus Rental Services - Swift Ride | Small Group Transportation</title>
         <meta
           name="description"
-          content="Browse and book our selection of quality mini buses for rent. Perfect for small groups and family trips."
+          content="Rent mini buses from Swift Ride for small groups and family trips. Comfortable and economical transportation for medium-sized groups."
         />
+        <meta name="keywords" content="mini bus rental, small group transportation, family trips, medium group travel, Swift Ride" />
       </Helmet>
 
       <Navbar />

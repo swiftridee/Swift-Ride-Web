@@ -47,11 +47,12 @@ const Login = () => {
   return (
     <>
       <Helmet>
-        <title>Login - Swift Ride</title>
+        <title>Login - Swift Ride | Access Your Vehicle Rental Account</title>
         <meta
           name="description"
-          content="Login to your Swift Ride account to book vehicles and manage your reservations."
+          content="Login to your Swift Ride account to book vehicles, manage reservations, and access your rental history."
         />
+        <meta name="keywords" content="login, Swift Ride login, vehicle rental account, book vehicles, manage reservations" />
       </Helmet>
 
       <div className="min-h-screen flex items-center justify-center p-4 sm:p-6 bg-gray-50">

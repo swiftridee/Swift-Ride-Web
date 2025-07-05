@@ -13,8 +13,9 @@ const Home = () => {
   return (
     <>
       <Helmet>
-        <title>Swift Ride - Online Vehicle Reservation System</title>
-        <meta name="description" content="Book cars, buses, minibuses & coasters online. Swift Ride offers the best vehicle rental services in Pakistan." />
+        <title>Swift Ride - Premium Vehicle Rental & Transportation Services</title>
+        <meta name="description" content="Swift Ride offers premium vehicle rental services including cars, buses, minibuses, and coasters. Book your reliable transportation today with flexible rental plans and excellent customer service." />
+        <meta name="keywords" content="vehicle rental, car rental, bus rental, minibus rental, coaster rental, transportation services, Swift Ride" />
       </Helmet>
 
       <Navbar />

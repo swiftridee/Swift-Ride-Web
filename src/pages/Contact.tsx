@@ -43,8 +43,9 @@ const Contact = () => {
   return (
     <>
       <Helmet>
-        <title>Contact Us - Swift Ride</title>
-        <meta name="description" content="Get in touch with Swift Ride. Contact our team for bookings, inquiries, or support." />
+        <title>Contact Us - Swift Ride | Get in Touch for Vehicle Rental Services</title>
+        <meta name="description" content="Contact Swift Ride for vehicle rental bookings, inquiries, or support. Our team is ready to help you with reliable transportation solutions." />
+        <meta name="keywords" content="contact Swift Ride, vehicle rental support, booking inquiries, customer service, Swift Ride contact" />
       </Helmet>
       
       <Navbar />

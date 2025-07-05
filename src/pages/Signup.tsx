@@ -120,11 +120,12 @@ const Signup = () => {
   return (
     <>
       <Helmet>
-        <title>Sign Up - Swift Ride</title>
+        <title>Sign Up - Swift Ride | Create Your Vehicle Rental Account</title>
         <meta
           name="description"
-          content="Create an account with Swift Ride to start booking vehicles for your journeys."
+          content="Create an account with Swift Ride to start booking vehicles for your journeys. Join thousands of satisfied customers for reliable transportation services."
         />
+        <meta name="keywords" content="sign up, register, Swift Ride account, vehicle rental registration, book vehicles" />
       </Helmet>
 
       <div className="min-h-screen flex items-center justify-center p-4 sm:p-6 bg-gray-50">

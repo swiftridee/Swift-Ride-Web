@@ -7,8 +7,9 @@ const About = () => {
   return (
     <>
       <Helmet>
-        <title>About Us - Swift Ride</title>
-        <meta name="description" content="Learn more about Swift Ride - Pakistan's premium vehicle rental service offering cars, buses, mini buses, and coasters." />
+        <title>About Us - Swift Ride | Leading Vehicle Rental Service in Pakistan</title>
+        <meta name="description" content="Learn more about Swift Ride - Pakistan's premium vehicle rental service offering cars, buses, mini buses, and coasters. Trusted by 15,000+ customers since 2020." />
+        <meta name="keywords" content="about Swift Ride, vehicle rental company, transportation services, Pakistan vehicle rental, Swift Ride history" />
       </Helmet>
       
       <Navbar />

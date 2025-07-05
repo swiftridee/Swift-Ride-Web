@@ -7,8 +7,9 @@ const Terms = () => {
   return (
     <>
       <Helmet>
-        <title>Terms & Conditions - Swift Ride</title>
-        <meta name="description" content="Terms and conditions for using Swift Ride vehicle rental services." />
+        <title>Terms & Conditions - Swift Ride | Vehicle Rental Service Agreement</title>
+        <meta name="description" content="Read the terms and conditions for using Swift Ride vehicle rental services. Understand your rights and responsibilities when booking our transportation services." />
+        <meta name="keywords" content="Swift Ride terms, vehicle rental terms, rental agreement, terms and conditions, Swift Ride policy" />
       </Helmet>
       
       <Navbar />
