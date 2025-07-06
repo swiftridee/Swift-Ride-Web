@@ -9,11 +9,11 @@ import { VehicleType } from "@/types";
 import { useVehicles } from "@/hooks/useVehicles";
 
 const Coasters = () => {
-  const { 
-    vehicles: allVehicles, 
-    loading, 
-    pagination, 
-    setPage 
+  const {
+    vehicles: allVehicles,
+    loading,
+    pagination,
+    setPage,
   } = useVehicles({
     vehicleType: "Coaster",
     limit: 5,
@@ -47,6 +47,29 @@ const Coasters = () => {
           coaster.location.toLowerCase().includes(location.toLowerCase())
         )
       );
+    }
+
+    // Apply seating capacity filter
+    if (filters.seatingCapacity && filters.seatingCapacity.length > 0) {
+      filtered = filtered.filter((coaster) =>
+        filters.seatingCapacity.includes(coaster.seatingCapacity)
+      );
+    }
+
+    // Apply features filter
+    if (filters.features && filters.features.length > 0) {
+      filtered = filtered.filter((coaster) =>
+        filters.features.some((feature: string) =>
+          coaster.features?.some((coasterFeature: string) =>
+            coasterFeature.toLowerCase().includes(feature.toLowerCase())
+          )
+        )
+      );
+    }
+
+    // Apply availability filter
+    if (filters.availability === "available") {
+      filtered = filtered.filter((coaster) => coaster.availability === true);
     }
 
     // Apply price filter
@@ -85,12 +108,18 @@ const Coasters = () => {
   return (
     <>
       <Helmet>
-        <title>Coaster Rental Services - Swift Ride | Medium to Large Group Transportation</title>
+        <title>
+          Coaster Rental Services - Swift Ride | Medium to Large Group
+          Transportation
+        </title>
         <meta
           name="description"
           content="Rent coasters from Swift Ride for medium to large groups and tours. Spacious and comfortable transportation for extended journeys."
         />
-        <meta name="keywords" content="coaster rental, medium group transportation, large group travel, tour transportation, Swift Ride" />
+        <meta
+          name="keywords"
+          content="coaster rental, medium group transportation, large group travel, tour transportation, Swift Ride"
+        />
       </Helmet>
 
       <Navbar />
@@ -129,10 +158,9 @@ const Coasters = () => {
                       No coasters found
                     </h3>
                     <p className="text-gray-600">
-                      {hasAppliedFilters 
+                      {hasAppliedFilters
                         ? "Try adjusting your filters to find available coasters."
-                        : "No coasters are currently available."
-                      }
+                        : "No coasters are currently available."}
                     </p>
                   </div>
                 ) : (
@@ -142,7 +170,7 @@ const Coasters = () => {
                         <VehicleCard key={coaster._id} vehicle={coaster} />
                       ))}
                     </div>
-                    
+
                     {/* Pagination - Only show when not filtering */}
                     {!hasAppliedFilters && pagination.totalPages > 1 && (
                       <div className="mt-8">
