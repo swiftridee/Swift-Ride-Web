@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { toast } from "@/components/ui/sonner";
+import { auth } from "@/utils/axios";
 
 const VerifyOTP = () => {
   const [searchParams] = useSearchParams();
@@ -69,19 +70,18 @@ const VerifyOTP = () => {
     setLoading(true);
     
     try {
-      // Simulate API call to verify OTP
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      const response = await auth.verifyOTP(email!, otpString);
       
-      // For demo purposes, accept any 6-digit OTP
-      if (otpString.length === 6) {
-        toast.success("OTP verified successfully!");
+      if (response.success) {
+        toast.success(response.message || "OTP verified successfully!");
         // Navigate to reset password page with email and verified OTP
         navigate(`/reset-password?email=${email}&otp=${otpString}`);
       } else {
-        toast.error("Invalid OTP. Please try again.");
+        toast.error(response.message || "Invalid OTP. Please try again.");
       }
-    } catch (error) {
-      toast.error("Failed to verify OTP. Please try again.");
+    } catch (error: any) {
+      console.error("OTP verification error:", error);
+      toast.error(error.response?.data?.message || "Failed to verify OTP. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -91,14 +91,19 @@ const VerifyOTP = () => {
     setResendLoading(true);
     
     try {
-      // Simulate API call to resend OTP
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      toast.success("OTP resent successfully!");
-      setTimeLeft(30);
-      setOtp(["", "", "", "", "", ""]);
-      inputRefs.current[0]?.focus();
-    } catch (error) {
-      toast.error("Failed to resend OTP. Please try again.");
+      const response = await auth.forgotPassword(email!);
+      
+      if (response.success) {
+        toast.success(response.message || "OTP resent successfully!");
+        setTimeLeft(30);
+        setOtp(["", "", "", "", "", ""]);
+        inputRefs.current[0]?.focus();
+      } else {
+        toast.error(response.message || "Failed to resend OTP");
+      }
+    } catch (error: any) {
+      console.error("Resend OTP error:", error);
+      toast.error(error.response?.data?.message || "Failed to resend OTP. Please try again.");
     } finally {
       setResendLoading(false);
     }
