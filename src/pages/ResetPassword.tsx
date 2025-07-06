@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { toast } from "@/components/ui/sonner";
+import { auth } from "@/utils/axios";
 
 const ResetPassword = () => {
   const [searchParams] = useSearchParams();
@@ -37,13 +38,17 @@ const ResetPassword = () => {
     setLoading(true);
     
     try {
-      // Simulate API call to reset password
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      const response = await auth.resetPassword(email, otp, password);
       
-      toast.success("Password reset successfully!");
-      navigate("/login");
-    } catch (error) {
-      toast.error("Failed to reset password. Please try again.");
+      if (response.success) {
+        toast.success(response.message || "Password reset successfully!");
+        navigate("/login");
+      } else {
+        toast.error(response.message || "Failed to reset password");
+      }
+    } catch (error: any) {
+      console.error("Reset password error:", error);
+      toast.error(error.response?.data?.message || "Failed to reset password. Please try again.");
     } finally {
       setLoading(false);
     }
