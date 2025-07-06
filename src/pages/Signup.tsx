@@ -14,7 +14,6 @@ const Signup = () => {
     email: "",
     password: "",
     confirmPassword: "",
-    city: "",
     cnic: "",
     agreeTerms: false,
   });
@@ -75,11 +74,6 @@ const Signup = () => {
       return;
     }
 
-    if (!formData.city.trim()) {
-      toast.error("Please enter your city");
-      return;
-    }
-
     if (!formData.cnic.trim()) {
       toast.error("Please enter your CNIC number");
       return;
@@ -97,7 +91,7 @@ const Signup = () => {
         formData.name,
         formData.email,
         formData.password,
-        formData.city,
+        "",
         formData.cnic.replace(/-/g, "")
       );
 
@@ -217,30 +211,6 @@ const Signup = () => {
               <p className="mt-1 text-sm text-gray-500">
                 Format: XXXXX-XXXXXXX-X
               </p>
-            </div>
-
-            <div>
-              <label
-                htmlFor="city"
-                className="block text-sm font-medium text-gray-700 mb-1"
-              >
-                City
-              </label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <i className="fas fa-city text-gray-400"></i>
-                </div>
-                <input
-                  type="text"
-                  id="city"
-                  name="city"
-                  value={formData.city}
-                  onChange={handleChange}
-                  className="pl-10 w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-primary focus:border-primary"
-                  placeholder="Enter your city"
-                  required
-                />
-              </div>
             </div>
 
             <div>
