@@ -9,11 +9,11 @@ import { VehicleType } from "@/types";
 import { useVehicles } from "@/hooks/useVehicles";
 
 const Buses = () => {
-  const { 
-    vehicles: allVehicles, 
-    loading, 
-    pagination, 
-    setPage 
+  const {
+    vehicles: allVehicles,
+    loading,
+    pagination,
+    setPage,
   } = useVehicles({
     vehicleType: "Bus",
     limit: 5,
@@ -45,6 +45,29 @@ const Buses = () => {
           bus.location.toLowerCase().includes(location.toLowerCase())
         )
       );
+    }
+
+    // Apply seating capacity filter
+    if (filters.seatingCapacity && filters.seatingCapacity.length > 0) {
+      filtered = filtered.filter((bus) =>
+        filters.seatingCapacity.includes(bus.seatingCapacity)
+      );
+    }
+
+    // Apply features filter
+    if (filters.features && filters.features.length > 0) {
+      filtered = filtered.filter((bus) =>
+        filters.features.some((feature: string) =>
+          bus.features?.some((busFeature: string) =>
+            busFeature.toLowerCase().includes(feature.toLowerCase())
+          )
+        )
+      );
+    }
+
+    // Apply availability filter
+    if (filters.availability === "available") {
+      filtered = filtered.filter((bus) => bus.availability === true);
     }
 
     // Apply price filter
@@ -83,12 +106,17 @@ const Buses = () => {
   return (
     <>
       <Helmet>
-        <title>Bus Rental Services - Swift Ride | Group Transportation Solutions</title>
+        <title>
+          Bus Rental Services - Swift Ride | Group Transportation Solutions
+        </title>
         <meta
           name="description"
           content="Rent spacious buses from Swift Ride for group travel, events, and corporate transportation. Comfortable and reliable transportation for large groups."
         />
-        <meta name="keywords" content="bus rental, group transportation, corporate bus, event transportation, large group travel, Swift Ride" />
+        <meta
+          name="keywords"
+          content="bus rental, group transportation, corporate bus, event transportation, large group travel, Swift Ride"
+        />
       </Helmet>
 
       <Navbar />
@@ -127,10 +155,9 @@ const Buses = () => {
                       No buses found
                     </h3>
                     <p className="text-gray-600">
-                      {hasAppliedFilters 
+                      {hasAppliedFilters
                         ? "Try adjusting your filters to find available buses."
-                        : "No buses are currently available."
-                      }
+                        : "No buses are currently available."}
                     </p>
                   </div>
                 ) : (
@@ -140,7 +167,7 @@ const Buses = () => {
                         <VehicleCard key={bus._id} vehicle={bus} />
                       ))}
                     </div>
-                    
+
                     {/* Pagination - Only show when not filtering */}
                     {!hasAppliedFilters && pagination.totalPages > 1 && (
                       <div className="mt-8">
