@@ -17,7 +17,7 @@ const Profile = () => {
     email: user?.email || "",
     dob: "",
     gender: "male" as "male" | "female" | "other",
-    cnic: "",
+    cnic:user?.cnic,
     province: "",
     city: "",
     postalCode: ""
