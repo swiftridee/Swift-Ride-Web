@@ -2,13 +2,14 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { toast } from "@/components/ui/sonner";
+import { auth } from "@/utils/axios";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!email) {
@@ -18,12 +19,21 @@ const ForgotPassword = () => {
     
     setLoading(true);
     
-    // Simulate API call to send OTP
-    setTimeout(() => {
+    try {
+      const response = await auth.forgotPassword(email);
+      
+      if (response.success) {
+        setSubmitted(true);
+        toast.success(response.message || "OTP sent to your email address");
+      } else {
+        toast.error(response.message || "Failed to send OTP");
+      }
+    } catch (error: any) {
+      console.error("Forgot password error:", error);
+      toast.error(error.response?.data?.message || "Failed to send OTP. Please try again.");
+    } finally {
       setLoading(false);
-      setSubmitted(true);
-      toast.success("OTP sent to your email address");
-    }, 1500);
+    }
   };
 
   return (
