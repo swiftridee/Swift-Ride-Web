@@ -3,6 +3,7 @@ import { useParams, useSearchParams, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import PaymentModal from "@/components/PaymentModal";
 import { VehicleType, RentalPlan } from "@/types";
 import { calculatePrice } from "@/utils/pricing";
 import { toast } from "sonner";
@@ -82,6 +83,9 @@ const BookingPage = () => {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  // Payment Modal State
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
+
   // Find the vehicle data
   useEffect(() => {
     if (!id) {
@@ -101,20 +105,23 @@ const BookingPage = () => {
           // Map the backend data to frontend VehicleType
           const backendVehicle = response.data.data;
           const mappedVehicle: VehicleType = {
-            id: backendVehicle._id || backendVehicle.id, // Handle both _id and id
+            _id: backendVehicle._id || backendVehicle.id, // Handle both _id and id
             name: backendVehicle.name,
             brand: backendVehicle.brand,
-            type: mapVehicleType(backendVehicle.vehicleType),
-            category: mapVehicleType(backendVehicle.vehicleType),
-            image: backendVehicle.image,
-            seatingCapacity: backendVehicle.seats,
-            seats: backendVehicle.seats,
-            price: backendVehicle.rentalPlan.basePrice,
-            pricePerHour: backendVehicle.rentalPlan.basePrice / 12,
-            pricePerDay: backendVehicle.rentalPlan.basePrice * 2,
+            model: backendVehicle.model || backendVehicle.name,
+            type: backendVehicle.vehicleType as
+              | "Car"
+              | "Bus"
+              | "Mini Bus"
+              | "Coaster",
             location: backendVehicle.location,
+            pricePerDay: backendVehicle.rentalPlan.basePrice * 2,
+            pricePerHour: backendVehicle.rentalPlan.basePrice / 12,
+            seatingCapacity: backendVehicle.seats,
+            transmission: backendVehicle.transmission || "Manual",
+            fuelType: backendVehicle.fuelType || "Petrol",
             features: backendVehicle.features || [],
-            available: backendVehicle.status === "Available",
+            images: backendVehicle.image ? [backendVehicle.image] : [],
             availability: backendVehicle.status === "Available",
           };
           console.log("Mapped vehicle:", mappedVehicle);
@@ -144,7 +151,7 @@ const BookingPage = () => {
   const calculateTotalPrice = () => {
     if (!vehicle) return 0;
     return calculatePrice(
-      vehicle.category,
+      vehicle.type.toLowerCase() as "car" | "bus" | "minibus" | "coaster",
       formData.rentalPlan as RentalPlan,
       formData.withDriver
     );
@@ -203,11 +210,16 @@ const BookingPage = () => {
       return;
     }
 
-    if (!vehicle?.id) {
+    if (!vehicle?._id) {
       toast.error("Vehicle information is missing");
       return;
     }
 
+    // Show payment modal instead of directly creating booking
+    setShowPaymentModal(true);
+  };
+
+  const handlePaymentComplete = async (paymentInfo: any) => {
     setIsSubmitting(true);
 
     try {
@@ -225,13 +237,23 @@ const BookingPage = () => {
       }
 
       const bookingData = {
-        vehicleId: vehicle.id,
+        vehicleId: vehicle?._id,
         startDate: startDate.toISOString(),
         endDate: endDate.toISOString(),
         includeDriver: formData.withDriver,
         pickupLocation: formData.pickupLocation,
         dropLocation: formData.dropLocation,
         notes: formData.notes,
+        paymentInfo: {
+          paymentMethod: paymentInfo.paymentMethod,
+          cardName: paymentInfo.cardName,
+          maskedCardNumber: paymentInfo.maskedCardNumber,
+          expiryDate: paymentInfo.expiryDate,
+          saveCard: paymentInfo.saveCard,
+          paymentDate: paymentInfo.paymentDate,
+          paymentStatus: paymentInfo.paymentStatus,
+          // Note: Full card number and CVV are not stored for security
+        },
         sharedRide: enableSharedRide
           ? {
               enabled: true,
@@ -261,9 +283,9 @@ const BookingPage = () => {
     }
   };
 
-  // Check if vehicle category supports shared rides
-  const isSharedRideSupported = vehicle?.category
-    ? ["car", "minibus", "coaster"].includes(vehicle.category)
+  // Check if vehicle type supports shared rides
+  const isSharedRideSupported = vehicle?.type
+    ? ["Car", "Mini Bus", "Coaster"].includes(vehicle.type)
     : false;
 
   // Calculate price per rider
@@ -316,13 +338,17 @@ const BookingPage = () => {
     <>
       <Helmet>
         <title>
-          Book {vehicle.brand} {vehicle.name} - Swift Ride | Secure Vehicle Rental
+          Book {vehicle.brand} {vehicle.name} - Swift Ride | Secure Vehicle
+          Rental
         </title>
         <meta
           name="description"
           content={`Book the ${vehicle.brand} ${vehicle.name} for your trip. Choose your rental plan, driver option, and complete your secure booking with Swift Ride.`}
         />
-        <meta name="keywords" content={`${vehicle.brand} ${vehicle.name} rental, vehicle booking, Swift Ride booking, ${vehicle.category} rental`} />
+        <meta
+          name="keywords"
+          content={`${vehicle.brand} ${vehicle.name} rental, vehicle booking, Swift Ride booking, ${vehicle.type} rental`}
+        />
       </Helmet>
 
       <Navbar />
@@ -346,7 +372,7 @@ const BookingPage = () => {
             <div className="bg-white rounded-lg shadow-md overflow-hidden mb-8">
               <div className="relative h-64 md:h-80">
                 <img
-                  src={vehicle.image}
+                  src={vehicle.images[0]}
                   alt={`${vehicle.brand} ${vehicle.name}`}
                   className="w-full h-full object-cover"
                 />
@@ -366,14 +392,14 @@ const BookingPage = () => {
 
                   <div className="flex items-center">
                     <i className="fas fa-users text-primary mr-2"></i>
-                    <span>{vehicle.seats} Seats</span>
+                    <span>{vehicle.seatingCapacity} Seats</span>
                   </div>
 
                   <div className="flex items-center">
                     <i className="fas fa-tag text-primary mr-2"></i>
                     <span>
-                      {vehicle.category.charAt(0).toUpperCase() +
-                        vehicle.category.slice(1)}
+                      {vehicle.type.charAt(0).toUpperCase() +
+                        vehicle.type.slice(1)}
                     </span>
                   </div>
                 </div>
@@ -469,7 +495,11 @@ const BookingPage = () => {
                       <span>
                         PKR{" "}
                         {calculatePrice(
-                          vehicle.category,
+                          vehicle.type.toLowerCase() as
+                            | "car"
+                            | "bus"
+                            | "minibus"
+                            | "coaster",
                           formData.rentalPlan as RentalPlan,
                           false
                         ).toLocaleString()}
@@ -484,7 +514,11 @@ const BookingPage = () => {
                           {(
                             calculateTotalPrice() -
                             calculatePrice(
-                              vehicle.category,
+                              vehicle.type.toLowerCase() as
+                                | "car"
+                                | "bus"
+                                | "minibus"
+                                | "coaster",
                               formData.rentalPlan as RentalPlan,
                               false
                             )
@@ -842,6 +876,21 @@ const BookingPage = () => {
           </div>
         </div>
       </main>
+
+      {/* Payment Modal */}
+      <PaymentModal
+        isOpen={showPaymentModal}
+        onClose={() => setShowPaymentModal(false)}
+        onPaymentComplete={handlePaymentComplete}
+        totalAmount={calculateTotalPrice()}
+        bookingDetails={{
+          vehicleName: `${vehicle?.brand} ${vehicle?.name}`,
+          pickupDate: formData.pickupDate,
+          returnDate: formData.returnDate,
+          pickupLocation: formData.pickupLocation,
+          dropLocation: formData.dropLocation,
+        }}
+      />
 
       <Footer />
     </>
