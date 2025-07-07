@@ -1,4 +1,3 @@
-
 import { Helmet } from "react-helmet";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -24,93 +23,164 @@ const Terms = () => {
             </p>
             
             <section className="mb-8">
-              <h2 className="text-xl font-bold mb-4">1. Acceptance of Terms</h2>
+              <h2 className="text-xl font-bold mb-4">1. Introduction</h2>
               <p>
-                By accessing or using the Swift Ride website, mobile applications, or any services provided by Swift Ride (collectively, the "Services"), you agree to be bound by these Terms & Conditions. If you do not agree to these terms, please do not use our Services.
+                Welcome to Swift Ride. These Terms & Conditions ("Terms") govern your use of our website, mobile applications, and any other related services (collectively, the "Services"). By using our Services, you agree to comply with and be legally bound by these Terms.
               </p>
             </section>
             
             <section className="mb-8">
               <h2 className="text-xl font-bold mb-4">2. Eligibility</h2>
+              <p>You must be:</p>
+              <ul className="list-disc pl-6 mb-4">
+                <li>At least 18 years old</li>
+                <li>Possess a valid Pakistani CNIC</li>
+                <li>Hold a valid Pakistani driver's license if booking with a self-drive option</li>
+              </ul>
               <p>
-                To use our Services, you must be at least 18 years old and possess a valid driver's license. You must provide accurate, complete, and up-to-date information during the registration process and keep your account information updated.
+                You also agree to provide accurate and updated information during account registration and throughout your usage of Swift Ride.
               </p>
             </section>
             
             <section className="mb-8">
-              <h2 className="text-xl font-bold mb-4">3. Account Registration</h2>
-              <p>
-                When you create an account with Swift Ride, you are responsible for maintaining the confidentiality of your account credentials and for all activities that occur under your account. You agree to notify us immediately of any unauthorized use of your account.
-              </p>
+              <h2 className="text-xl font-bold mb-4">3. Account Registration & Security</h2>
+              <ul className="list-disc pl-6 mb-4">
+                <li>You are responsible for maintaining the confidentiality of your login credentials.</li>
+                <li>You must notify Swift Ride immediately of any unauthorized use of your account.</li>
+                <li>You may not create an account using false identity or someone else's information.</li>
+              </ul>
             </section>
             
             <section className="mb-8">
               <h2 className="text-xl font-bold mb-4">4. Rental Terms</h2>
-              <p>
-                4.1. <strong>Booking and Cancellation:</strong> All bookings are subject to vehicle availability. Cancellation policies vary by vehicle type and rental duration. Cancellations made 48 hours before the scheduled pickup time will receive a full refund. Cancellations within 48 hours may be subject to a cancellation fee.
-              </p>
-              <p>
-                4.2. <strong>Vehicle Pickup and Return:</strong> You agree to pick up and return the vehicle at the agreed-upon time and location. Late returns may result in additional charges.
-              </p>
-              <p>
-                4.3. <strong>Vehicle Use:</strong> You agree to use the vehicle only for lawful purposes and in accordance with all applicable traffic laws and regulations. Off-road driving and racing are strictly prohibited.
-              </p>
-              <p>
-                4.4. <strong>Damages:</strong> You are responsible for any damage to the vehicle during the rental period. Swift Ride offers optional insurance coverage at additional cost.
-              </p>
+              
+              <h3 className="text-lg font-semibold mb-3">4.1 Booking & Cancellation</h3>
+              <ul className="list-disc pl-6 mb-4">
+                <li>Bookings are subject to vehicle availability.</li>
+                <li>Full refunds for cancellations made at least 48 hours before pickup.</li>
+                <li>Cancellations within 48 hours may be charged up to 30% cancellation fee.</li>
+                <li>No refunds for no-shows or same-day cancellations.</li>
+              </ul>
+              
+              <h3 className="text-lg font-semibold mb-3">4.2 Vehicle Pickup & Return</h3>
+              <ul className="list-disc pl-6 mb-4">
+                <li>Vehicles must be picked up and returned at the agreed location and time.</li>
+                <li>Late returns beyond a 30-minute grace period will incur hourly or daily charges.</li>
+                <li>ID, CNIC, and license verification required at pickup.</li>
+              </ul>
+              
+              <h3 className="text-lg font-semibold mb-3">4.3 Vehicle Use</h3>
+              <p className="mb-3">Vehicles may be used only for lawful purposes within Pakistan.</p>
+              <p className="mb-3">Use is strictly prohibited for:</p>
+              <ul className="list-disc pl-6 mb-4">
+                <li>Racing, off-road travel</li>
+                <li>Transport of illegal items</li>
+                <li>Commercial use (unless explicitly allowed)</li>
+              </ul>
+              <p>Any violation may result in immediate termination of rental and forfeiture of deposits.</p>
+              
+              <h3 className="text-lg font-semibold mb-3">4.4 Damages</h3>
+              <ul className="list-disc pl-6 mb-4">
+                <li>You are responsible for all damages caused during the rental period.</li>
+                <li>Optional insurance may be purchased at booking for damage coverage.</li>
+                <li>Swift Ride will assess all damages upon return and deduct charges from your deposit.</li>
+              </ul>
+              
+              <h3 className="text-lg font-semibold mb-3">4.5 Driver, Fuel, and Traffic Rules</h3>
+              <ul className="list-disc pl-6 mb-4">
+                <li>Self-drive and with-driver options are available.</li>
+                <li>In self-drive, you are liable for:</li>
+                <ul className="list-disc pl-6 mt-2">
+                  <li>Traffic violations</li>
+                  <li>Motorway tolls</li>
+                  <li>Fuel expenses</li>
+                  <li>Road safety compliance (as per Motor Vehicles Ordinance 1965)</li>
+                </ul>
+                <li>Fines or challans must be paid by the user; failure to do so may result in blacklisting.</li>
+              </ul>
             </section>
             
             <section className="mb-8">
               <h2 className="text-xl font-bold mb-4">5. Payment Terms</h2>
-              <p>
-                5.1. <strong>Rates and Charges:</strong> The total rental fee will be disclosed at the time of booking. Additional charges may apply for late returns, damages, or extra services.
-              </p>
-              <p>
-                5.2. <strong>Payment Methods:</strong> Swift Ride accepts major credit cards, debit cards, and other payment methods as specified on our website or mobile application.
-              </p>
-              <p>
-                5.3. <strong>Security Deposit:</strong> A security deposit may be required at the time of pickup and will be refunded upon the vehicle's satisfactory return.
-              </p>
+              
+              <h3 className="text-lg font-semibold mb-3">5.1 Rates & Charges</h3>
+              <p className="mb-3">Rental rates depend on:</p>
+              <ul className="list-disc pl-6 mb-4">
+                <li>Vehicle type (Car, Bus, Mini Bus, Coaster)</li>
+                <li>Rental plan (12 Hr, 2 Day, 3 Day, 1 Week)</li>
+                <li>Driver option (With / Without Driver)</li>
+              </ul>
+              <p className="mb-4">Full amount (including taxes and fees) is shown at checkout.</p>
+              <p>Late return, damage, and cleaning fees may apply.</p>
+              
+              <h3 className="text-lg font-semibold mb-3">5.2 Payment Methods</h3>
+              <p className="mb-3">Accepted methods:</p>
+              <ul className="list-disc pl-6 mb-4">
+                <li>Credit/debit cards</li>
+                <li>Cash</li>
+              </ul>
+              <p>Payment must be made in advance at the time of booking.</p>
+              
+              <h3 className="text-lg font-semibold mb-3">5.3 Security Deposit</h3>
+              <ul className="list-disc pl-6 mb-4">
+                <li>A refundable security deposit may be required.</li>
+                <li>Deposits are released within 3–7 working days after vehicle return, subject to:</li>
+                <ul className="list-disc pl-6 mt-2">
+                  <li>No damage</li>
+                  <li>Timely return</li>
+                  <li>Clean condition</li>
+                </ul>
+              </ul>
             </section>
             
             <section className="mb-8">
               <h2 className="text-xl font-bold mb-4">6. Limitation of Liability</h2>
+              <p>Swift Ride is not liable for:</p>
+              <ul className="list-disc pl-6 mb-4">
+                <li>Accidents, delays, or breakdowns during your rental</li>
+                <li>Personal loss or injury due to misuse of the vehicle</li>
+              </ul>
+              <p>Our total liability is limited to the amount paid for the booking.</p>
+            </section>
+            
+            <section className="mb-8">
+              <h2 className="text-xl font-bold mb-4">7. Indemnity</h2>
               <p>
-                To the maximum extent permitted by law, Swift Ride shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising out of or related to your use of our Services.
+                You agree to indemnify and hold harmless Swift Ride, its officers, employees, and agents from any claims, damages, fines, or costs resulting from your misuse of the Services or breach of these Terms.
               </p>
             </section>
             
             <section className="mb-8">
-              <h2 className="text-xl font-bold mb-4">7. Indemnification</h2>
+              <h2 className="text-xl font-bold mb-4">8. Modifications to the Terms</h2>
               <p>
-                You agree to indemnify and hold harmless Swift Ride, its affiliates, officers, directors, employees, and agents from and against any claims, liabilities, damages, losses, costs, expenses, or fees (including reasonable attorneys' fees) arising from your use of the Services or violation of these Terms.
-              </p>
-            </section>
-            
-            <section className="mb-8">
-              <h2 className="text-xl font-bold mb-4">8. Modifications to Terms</h2>
-              <p>
-                Swift Ride reserves the right to modify these Terms & Conditions at any time. We will notify users of significant changes via email or through a notice on our website or mobile application. Your continued use of the Services after such modifications constitutes your acceptance of the updated terms.
+                Swift Ride may update these Terms & Conditions at any time. Notice will be provided on the website or by email. Continued use of the Services after updates constitutes agreement.
               </p>
             </section>
             
             <section className="mb-8">
               <h2 className="text-xl font-bold mb-4">9. Governing Law</h2>
-              <p>
-                These Terms & Conditions shall be governed by and construed in accordance with the laws of Pakistan, without regard to its conflict of law provisions.
-              </p>
+              <p>These Terms & Conditions are governed by and construed in accordance with the laws of Pakistan, including:</p>
+              <ul className="list-disc pl-6 mb-4">
+                <li>Motor Vehicles Ordinance 1965</li>
+                <li>Consumer Protection Act</li>
+                <li>Local vehicle rental and safety regulations</li>
+              </ul>
             </section>
             
             <section>
-              <h2 className="text-xl font-bold mb-4">10. Contact Us</h2>
-              <p>
-                If you have any questions about these Terms & Conditions, please contact us at:
-              </p>
-              <address className="not-italic">
-                Swift Ride<br />
-                General Bus Stand Faisalabad, Pakistan<br />
-                Email: contactswiftride@gmail.com<br />
-                Phone: +92 (21) 1234-5678
+              <h2 className="text-xl font-bold mb-4">10. Contact Information</h2>
+              <p>For queries or complaints regarding these Terms, contact us:</p>
+              <address className="not-italic bg-gray-50 p-4 rounded-lg">
+                <div className="mb-2">
+                  <span className="font-semibold">Swift Ride</span>
+                </div>
+                <div className="mb-2">Sargodha Road, Near Crescent Textile Mills, Faisalabad</div>
+                <div className="mb-2">
+                  Email: <a href="mailto:contactswiftride@gmail.com" className="text-primary hover:underline">contactswiftride@gmail.com</a>
+                </div>
+                <div>
+                  Phone: <a href="tel:0342-6988007" className="text-primary hover:underline">0342-6988007</a> | <a href="tel:0309-7288942" className="text-primary hover:underline">0309-7288942</a>
+                </div>
               </address>
             </section>
           </div>
