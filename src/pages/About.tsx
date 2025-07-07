@@ -1,4 +1,3 @@
-
 import { Helmet } from "react-helmet";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -37,7 +36,7 @@ const About = () => {
                   Swift Ride was founded in 2020 with a simple mission: to provide reliable, high-quality vehicle rental services to the people of Pakistan. What started as a small fleet of cars has now grown into a comprehensive service offering cars, buses, mini buses, and coasters.
                 </p>
                 <p className="text-gray-600">
-                  Our founder, Ahmed Khan, identified a gap in the market for a transparent, customer-focused vehicle rental service. Today, Swift Ride has become synonymous with quality, reliability, and excellent customer service in the transportation industry.
+                  Our founders, Muneeb Ur Rehman & Sajid Ali, identified a gap in the market for a transparent, customer-focused vehicle rental service. Today, Swift Ride has become synonymous with quality, reliability, and excellent customer service in the transportation industry.
                 </p>
               </div>
               <div className="rounded-lg overflow-hidden shadow-lg">
@@ -107,39 +106,63 @@ const About = () => {
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <div className="text-center">
-                <div className="rounded-full overflow-hidden w-40 h-40 mx-auto mb-4">
+                <div className="rounded-full overflow-hidden w-40 h-40 mx-auto mb-4 bg-gray-200 flex items-center justify-center">
                   <img 
-                    src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=2787&auto=format&fit=crop&ixlib=rb-4.0.3" 
-                    alt="Ahmed Khan" 
+                    src="/images/team/muneeb-ur-rehman.jpg" 
+                    alt="Muneeb Ur Rehman" 
                     className="w-full h-full object-cover"
+                    onError={(e) => {
+                      const target = e.currentTarget as HTMLImageElement;
+                      const fallback = target.nextElementSibling as HTMLElement;
+                      target.style.display = 'none';
+                      fallback.style.display = 'flex';
+                    }}
                   />
+                  <div className="hidden w-full h-full items-center justify-center text-gray-500">
+                    <div className="text-center">
+                      <i className="fas fa-user text-4xl mb-2"></i>
+                      <p className="text-sm">Photo Coming Soon</p>
+                    </div>
+                  </div>
                 </div>
-                <h3 className="text-xl font-semibold">Ahmed Khan</h3>
+                <h3 className="text-xl font-semibold">Muneeb Ur Rehman</h3>
                 <p className="text-primary">Founder & CEO</p>
               </div>
               
               <div className="text-center">
-                <div className="rounded-full overflow-hidden w-40 h-40 mx-auto mb-4">
+                <div className="rounded-full overflow-hidden w-40 h-40 mx-auto mb-4 bg-gray-200 flex items-center justify-center">
                   <img 
-                    src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=2787&auto=format&fit=crop&ixlib=rb-4.0.3" 
-                    alt="Fatima Ali" 
+                    src="/images/team/sajid-ali.jpg" 
+                    alt="Sajid Ali" 
                     className="w-full h-full object-cover"
+                    onError={(e) => {
+                      const target = e.currentTarget as HTMLImageElement;
+                      const fallback = target.nextElementSibling as HTMLElement;
+                      target.style.display = 'none';
+                      fallback.style.display = 'flex';
+                    }}
                   />
+                  <div className="hidden w-full h-full items-center justify-center text-gray-500">
+                    <div className="text-center">
+                      <i className="fas fa-user text-4xl mb-2"></i>
+                      <p className="text-sm">Photo Coming Soon</p>
+                    </div>
+                  </div>
                 </div>
-                <h3 className="text-xl font-semibold">Fatima Ali</h3>
-                <p className="text-primary">Operations Director</p>
+                <h3 className="text-xl font-semibold">Sajid Ali</h3>
+                <p className="text-primary">Founder & COO</p>
               </div>
               
               <div className="text-center">
                 <div className="rounded-full overflow-hidden w-40 h-40 mx-auto mb-4">
                   <img 
                     src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=2787&auto=format&fit=crop&ixlib=rb-4.0.3" 
-                    alt="Hassan Ahmed" 
+                    alt="Hassan Ahmad " 
                     className="w-full h-full object-cover"
                   />
                 </div>
-                <h3 className="text-xl font-semibold">Hassan Ahmed</h3>
-                <p className="text-primary">Fleet Manager</p>
+                <h3 className="text-xl font-semibold">Hassan Ahmad </h3>
+                <p className="text-primary"> Manager</p>
               </div>
             </div>
           </div>
@@ -167,7 +190,7 @@ const About = () => {
               </div>
               
               <div>
-                <div className="text-4xl text-primary font-bold mb-2">10</div>
+                <div className="text-4xl text-primary font-bold mb-2">30+</div>
                 <p className="text-gray-600">Cities Covered</p>
               </div>
               
