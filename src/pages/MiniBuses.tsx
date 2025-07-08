@@ -9,11 +9,11 @@ import { VehicleType } from "@/types";
 import { useVehicles } from "@/hooks/useVehicles";
 
 const MiniBuses = () => {
-  const { 
-    vehicles: allVehicles, 
-    loading, 
-    pagination, 
-    setPage 
+  const {
+    vehicles: allVehicles,
+    loading,
+    pagination,
+    setPage,
   } = useVehicles({
     vehicleType: "Mini Bus",
     limit: 5,
@@ -31,28 +31,51 @@ const MiniBuses = () => {
 
     // Apply brand filter (multiple selections)
     if (filters.brands && filters.brands.length > 0) {
-      filtered = filtered.filter((bus) =>
+      filtered = filtered.filter((minibus) =>
         filters.brands.some((brand: string) =>
-          bus.brand.toLowerCase().includes(brand.toLowerCase())
+          minibus.brand.toLowerCase().includes(brand.toLowerCase())
         )
       );
     }
 
     // Apply location filter (multiple selections)
     if (filters.locations && filters.locations.length > 0) {
-      filtered = filtered.filter((bus) =>
+      filtered = filtered.filter((minibus) =>
         filters.locations.some((location: string) =>
-          bus.location.toLowerCase().includes(location.toLowerCase())
+          minibus.location.toLowerCase().includes(location.toLowerCase())
         )
       );
+    }
+
+    // Apply seating capacity filter
+    if (filters.seatingCapacity && filters.seatingCapacity.length > 0) {
+      filtered = filtered.filter((minibus) =>
+        filters.seatingCapacity.includes(minibus.seatingCapacity)
+      );
+    }
+
+    // Apply features filter
+    if (filters.features && filters.features.length > 0) {
+      filtered = filtered.filter((minibus) =>
+        filters.features.some((feature: string) =>
+          minibus.features?.some((minibusFeature: string) =>
+            minibusFeature.toLowerCase().includes(feature.toLowerCase())
+          )
+        )
+      );
+    }
+
+    // Apply availability filter
+    if (filters.availability === "available") {
+      filtered = filtered.filter((minibus) => minibus.availability === true);
     }
 
     // Apply price filter
     if (filters.priceRange) {
       filtered = filtered.filter(
-        (bus) =>
-          bus.pricePerDay >= filters.priceRange.min &&
-          bus.pricePerDay <= filters.priceRange.max
+        (minibus) =>
+          minibus.pricePerDay >= filters.priceRange.min &&
+          minibus.pricePerDay <= filters.priceRange.max
       );
     }
 
@@ -83,12 +106,17 @@ const MiniBuses = () => {
   return (
     <>
       <Helmet>
-        <title>Mini Bus Rental Services - Swift Ride | Small Group Transportation</title>
+        <title>
+          Mini Bus Rental Services - Swift Ride | Small Group Transportation
+        </title>
         <meta
           name="description"
           content="Rent mini buses from Swift Ride for small groups and family trips. Comfortable and economical transportation for medium-sized groups."
         />
-        <meta name="keywords" content="mini bus rental, small group transportation, family trips, medium group travel, Swift Ride" />
+        <meta
+          name="keywords"
+          content="mini bus rental, small group transportation, family trips, medium group travel, Swift Ride"
+        />
       </Helmet>
 
       <Navbar />
@@ -127,10 +155,9 @@ const MiniBuses = () => {
                       No mini buses found
                     </h3>
                     <p className="text-gray-600">
-                      {hasAppliedFilters 
+                      {hasAppliedFilters
                         ? "Try adjusting your filters to find available mini buses."
-                        : "No mini buses are currently available."
-                      }
+                        : "No mini buses are currently available."}
                     </p>
                   </div>
                 ) : (
@@ -140,7 +167,7 @@ const MiniBuses = () => {
                         <VehicleCard key={bus._id} vehicle={bus} />
                       ))}
                     </div>
-                    
+
                     {/* Pagination - Only show when not filtering */}
                     {!hasAppliedFilters && pagination.totalPages > 1 && (
                       <div className="mt-8">

@@ -9,11 +9,11 @@ import { VehicleType } from "@/types";
 import { useVehicles } from "@/hooks/useVehicles";
 
 const Cars = () => {
-  const { 
-    vehicles: allVehicles, 
-    loading, 
-    pagination, 
-    setPage 
+  const {
+    vehicles: allVehicles,
+    loading,
+    pagination,
+    setPage,
   } = useVehicles({
     vehicleType: "Car",
     limit: 5,
@@ -45,6 +45,29 @@ const Cars = () => {
           car.location.toLowerCase().includes(location.toLowerCase())
         )
       );
+    }
+
+    // Apply seating capacity filter
+    if (filters.seatingCapacity && filters.seatingCapacity.length > 0) {
+      filtered = filtered.filter((car) =>
+        filters.seatingCapacity.includes(car.seatingCapacity)
+      );
+    }
+
+    // Apply features filter
+    if (filters.features && filters.features.length > 0) {
+      filtered = filtered.filter((car) =>
+        filters.features.some((feature: string) =>
+          car.features?.some((carFeature: string) =>
+            carFeature.toLowerCase().includes(feature.toLowerCase())
+          )
+        )
+      );
+    }
+
+    // Apply availability filter
+    if (filters.availability === "available") {
+      filtered = filtered.filter((car) => car.availability === true);
     }
 
     // Apply price filter
@@ -88,7 +111,10 @@ const Cars = () => {
           name="description"
           content="Rent quality cars from Swift Ride for personal travel, family trips, and business use. Choose from top brands with flexible rental plans and competitive rates."
         />
-        <meta name="keywords" content="car rental, car hire, vehicle rental, personal car, business car, family car, Swift Ride" />
+        <meta
+          name="keywords"
+          content="car rental, car hire, vehicle rental, personal car, business car, family car, Swift Ride"
+        />
       </Helmet>
 
       <Navbar />
@@ -128,10 +154,9 @@ const Cars = () => {
                       No cars found
                     </h3>
                     <p className="text-gray-600">
-                      {hasAppliedFilters 
+                      {hasAppliedFilters
                         ? "Try adjusting your filters to find available cars."
-                        : "No cars are currently available."
-                      }
+                        : "No cars are currently available."}
                     </p>
                   </div>
                 ) : (
@@ -141,7 +166,7 @@ const Cars = () => {
                         <VehicleCard key={car._id} vehicle={car} />
                       ))}
                     </div>
-                    
+
                     {/* Pagination - Only show when not filtering */}
                     {!hasAppliedFilters && pagination.totalPages > 1 && (
                       <div className="mt-8">
