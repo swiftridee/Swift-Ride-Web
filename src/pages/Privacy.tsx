@@ -136,11 +136,17 @@ const Privacy = () => {
               <p>
                 If you have any questions about this Privacy Policy, please contact us at:
               </p>
-              <address className="not-italic">
-                Swift Ride<br />
-                General Bus Stand Faisalabad, Pakistan<br />
-                Email: contactswiftride@gmail.com<br />
-                Phone: +92 (21) 1234-5678
+              <address className="not-italic bg-gray-50 p-4 rounded-lg">
+                <div className="mb-2">
+                  <span className="font-semibold">Swift Ride</span>
+                </div>
+                <div className="mb-2">Sargodha Road, Near Crescent Textile Mills, Faisalabad</div>
+                <div className="mb-2">
+                  Email: <a href="mailto:contactswiftride@gmail.com" className="text-primary hover:underline">contactswiftride@gmail.com</a>
+                </div>
+                <div>
+                  Phone: <a href="tel:0342-6988007" className="text-primary hover:underline">0342-6988007</a> | <a href="tel:0309-7288942" className="text-primary hover:underline">0309-7288942</a>
+                </div>
               </address>
             </section>
           </div>
