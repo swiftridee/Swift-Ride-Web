@@ -436,20 +436,6 @@ const Navbar = () => {
                 >
                   Contact
                 </Link>
-                <Link
-                  to="/terms"
-                  onClick={e => { scrollToTop(e, '/terms'); setMobileMenuOpen(false); }}
-                  className="block py-3 text-lg text-gray-700"
-                >
-                  Terms & Conditions
-                </Link>
-                <Link
-                  to="/privacy"
-                  onClick={e => { scrollToTop(e, '/privacy'); setMobileMenuOpen(false); }}
-                  className="block py-3 text-lg text-gray-700"
-                >
-                  Privacy Policy
-                </Link>
               </div>
             </div>
 
