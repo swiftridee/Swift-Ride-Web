@@ -45,14 +45,12 @@ export const auth = {
     name: string,
     email: string,
     password: string,
-    city: string,
     cnic: string
   ): Promise<AuthResponse> {
     const response = await axiosInstance.post<AuthResponse>("/auth/register", {
       name,
       email,
       password,
-      city,
       cnic,
     });
 
