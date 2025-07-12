@@ -134,7 +134,86 @@ const Terms = () => {
             </section>
             
             <section className="mb-8">
-              <h2 className="text-xl font-bold mb-4">6. Limitation of Liability</h2>
+              <h2 className="text-xl font-bold mb-4">6. Refund Policy</h2>
+              
+              <h3 className="text-lg font-semibold mb-3">6.1 Cancellation & Refund Terms</h3>
+              <p className="mb-3">Swift Ride offers the following refund policy for bookings made through our platform:</p>
+              
+              <h4 className="text-md font-semibold mb-2">6.1.1 Full Refund (100%)</h4>
+              <ul className="list-disc pl-6 mb-4">
+                <li>Cancellations made 48 hours or more before the scheduled pickup time</li>
+                <li>Vehicle unavailability due to mechanical issues or maintenance</li>
+                <li>Service cancellation by Swift Ride due to operational issues</li>
+                <li>Force majeure events (natural disasters, government restrictions, etc.)</li>
+              </ul>
+              
+              <h4 className="text-md font-semibold mb-2">6.1.2 Partial Refund (70%)</h4>
+              <ul className="list-disc pl-6 mb-4">
+                <li>Cancellations made between 24-48 hours before the scheduled pickup time</li>
+                <li>30% cancellation fee applies</li>
+              </ul>
+              
+              <h4 className="text-md font-semibold mb-2">6.1.3 No Refund (0%)</h4>
+              <ul className="list-disc pl-6 mb-4">
+                <li>Cancellations made less than 24 hours before pickup time</li>
+                <li>No-show at the scheduled pickup time and location</li>
+                <li>Same-day cancellations</li>
+                <li>Violation of rental terms leading to service termination</li>
+              </ul>
+              
+              <h3 className="text-lg font-semibold mb-3">6.2 Refund Processing</h3>
+              <ul className="list-disc pl-6 mb-4">
+                <li>Refunds are processed within 5-7 working days for card payments</li>
+                <li>Cash refunds are processed at our Faisalabad office within 3 working days</li>
+                <li>Refunds are issued to the original payment method used for booking</li>
+                <li>Bank processing times may vary (typically 3-5 additional business days)</li>
+              </ul>
+              
+              <h3 className="text-lg font-semibold mb-3">6.3 Security Deposit Refunds</h3>
+              <ul className="list-disc pl-6 mb-4">
+                <li>Security deposits are refunded within 3-7 working days after vehicle return</li>
+                <li>Deductions may apply for:</li>
+                <ul className="list-disc pl-6 mt-2">
+                  <li>Vehicle damage beyond normal wear and tear</li>
+                  <li>Traffic violation fines incurred during rental period</li>
+                  <li>Fuel costs if vehicle is returned with less fuel than at pickup</li>
+                  <li>Cleaning fees for excessive dirt or damage to interior</li>
+                  <li>Late return fees beyond the 30-minute grace period</li>
+                </ul>
+                <li>Detailed breakdown of any deductions will be provided via email</li>
+              </ul>
+              
+              <h3 className="text-lg font-semibold mb-3">6.4 Refund Exceptions</h3>
+              <p className="mb-3">No refunds will be provided for:</p>
+              <ul className="list-disc pl-6 mb-4">
+                <li>Services already rendered or partially used</li>
+                <li>Customer dissatisfaction with vehicle features or performance (unless vehicle is defective)</li>
+                <li>Weather-related cancellations unless Swift Ride determines conditions are unsafe</li>
+                <li>Personal emergencies or change of plans (except as covered in 6.1.1)</li>
+                <li>Failure to provide required documentation (CNIC, driver's license) at pickup</li>
+              </ul>
+              
+              <h3 className="text-lg font-semibold mb-3">6.5 Refund Contact Information</h3>
+              <p className="mb-3">For refund inquiries or disputes, contact us:</p>
+              <ul className="list-disc pl-6 mb-4">
+                <li>Email: <a href="mailto:contactswiftride@gmail.com" className="text-primary hover:underline">contactswiftride@gmail.com</a></li>
+                <li>Phone: <a href="tel:0342-6988007" className="text-primary hover:underline">0342-6988007</a> | <a href="tel:0309-7288942" className="text-primary hover:underline">0309-7288942</a></li>
+                <li>Office Hours: Monday to Saturday, 9:00 AM to 6:00 PM (Pakistan Standard Time)</li>
+                <li>Address: Sargodha Road, Near Crescent Textile Mills, Faisalabad</li>
+              </ul>
+              
+              <h3 className="text-lg font-semibold mb-3">6.6 Dispute Resolution</h3>
+              <p className="mb-3">In case of refund disputes:</p>
+              <ul className="list-disc pl-6 mb-4">
+                <li>Swift Ride will investigate all refund requests within 48 hours</li>
+                <li>Evidence and documentation may be required for dispute resolution</li>
+                <li>Final decisions are made by Swift Ride management</li>
+                <li>Customers may escalate to relevant consumer protection authorities in Pakistan if unsatisfied</li>
+              </ul>
+            </section>
+            
+            <section className="mb-8">
+              <h2 className="text-xl font-bold mb-4">7. Limitation of Liability</h2>
               <p>Swift Ride is not liable for:</p>
               <ul className="list-disc pl-6 mb-4">
                 <li>Accidents, delays, or breakdowns during your rental</li>
@@ -144,21 +223,21 @@ const Terms = () => {
             </section>
             
             <section className="mb-8">
-              <h2 className="text-xl font-bold mb-4">7. Indemnity</h2>
+              <h2 className="text-xl font-bold mb-4">8. Indemnity</h2>
               <p>
                 You agree to indemnify and hold harmless Swift Ride, its officers, employees, and agents from any claims, damages, fines, or costs resulting from your misuse of the Services or breach of these Terms.
               </p>
             </section>
             
             <section className="mb-8">
-              <h2 className="text-xl font-bold mb-4">8. Modifications to the Terms</h2>
+              <h2 className="text-xl font-bold mb-4">9. Modifications to the Terms</h2>
               <p>
                 Swift Ride may update these Terms & Conditions at any time. Notice will be provided on the website or by email. Continued use of the Services after updates constitutes agreement.
               </p>
             </section>
             
             <section className="mb-8">
-              <h2 className="text-xl font-bold mb-4">9. Governing Law</h2>
+              <h2 className="text-xl font-bold mb-4">10. Governing Law</h2>
               <p>These Terms & Conditions are governed by and construed in accordance with the laws of Pakistan, including:</p>
               <ul className="list-disc pl-6 mb-4">
                 <li>Motor Vehicles Ordinance 1965</li>
@@ -168,7 +247,7 @@ const Terms = () => {
             </section>
             
             <section>
-              <h2 className="text-xl font-bold mb-4">10. Contact Information</h2>
+              <h2 className="text-xl font-bold mb-4">11. Contact Information</h2>
               <p>For queries or complaints regarding these Terms, contact us:</p>
               <address className="not-italic bg-gray-50 p-4 rounded-lg">
                 <div className="mb-2">
