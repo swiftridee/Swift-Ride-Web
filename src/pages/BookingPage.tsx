@@ -812,15 +812,10 @@ const BookingPage = () => {
                 {/* Shared Rider Fields - Show when shared ride is enabled */}
                 {enableSharedRide && (
                   <div className="mb-6 p-4 bg-blue-50 border border-blue-100 rounded-lg">
-                    <h3 className="font-medium text-blue-800 mb-3">
-                      Co-rider Information
-                    </h3>
+                    <h3 className="font-medium text-blue-800 mb-3">Co-rider Information</h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div>
-                        <label
-                          className="block text-gray-700 mb-2"
-                          htmlFor="coRiderName"
-                        >
+                      <div className="mb-4">
+                        <label className="block text-gray-700 mb-2" htmlFor="coRiderName">
                           Co-rider Name
                         </label>
                         <input
@@ -833,11 +828,8 @@ const BookingPage = () => {
                           required
                         />
                       </div>
-                      <div>
-                        <label
-                          className="block text-gray-700 mb-2"
-                          htmlFor="coRiderPhone"
-                        >
+                      <div className="mb-4">
+                        <label className="block text-gray-700 mb-2" htmlFor="coRiderPhone">
                           Co-rider Phone
                         </label>
                         <input
@@ -846,15 +838,16 @@ const BookingPage = () => {
                           name="phone"
                           value={sharedRiderInfo.phone}
                           onChange={handleSharedRiderChange}
+                          inputMode="numeric"
+                          pattern="[0-9]{11}"
+                          maxLength={11}
+                          minLength={11}
                           className="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary"
                           required
                         />
                       </div>
-                      <div className="col-span-2">
-                        <label
-                          className="block text-gray-700 mb-2"
-                          htmlFor="coRiderEmail"
-                        >
+                      <div className="md:col-span-2 mb-4">
+                        <label className="block text-gray-700 mb-2" htmlFor="coRiderEmail">
                           Co-rider Email (Optional)
                         </label>
                         <input
@@ -866,8 +859,7 @@ const BookingPage = () => {
                           className="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary"
                         />
                         <p className="text-sm text-blue-600 mt-2">
-                          The total cost will be split equally (50%) between
-                          both riders. Both will receive booking confirmation.
+                          The total cost will be split equally (50%) between both riders. Both will receive booking confirmation.
                         </p>
                       </div>
                     </div>
