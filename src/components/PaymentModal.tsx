@@ -119,12 +119,27 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
         toast.error("Please enter the name on card");
         return false;
       }
+      if (!/^[A-Za-z ]+$/.test(paymentInfo.cardName.trim())) {
+        toast.error("Name on card should only contain letters and spaces");
+        return false;
+      }
       if (!paymentInfo.cardNumber.replace(/\s/g, "").match(/^\d{16}$/)) {
         toast.error("Please enter a valid 16-digit card number");
         return false;
       }
       if (!paymentInfo.expiryDate.match(/^\d{2}\/\d{2}$/)) {
         toast.error("Please enter a valid expiry date (MM/YY)");
+        return false;
+      }
+      // Check expiry date is not in the past
+      const [mm, yy] = paymentInfo.expiryDate.split("/");
+      const expMonth = parseInt(mm, 10);
+      const expYear = parseInt(yy, 10) + 2000;
+      const now = new Date();
+      const thisMonth = now.getMonth() + 1;
+      const thisYear = now.getFullYear();
+      if (expYear < thisYear || (expYear === thisYear && expMonth < thisMonth)) {
+        toast.error("Card expiry date cannot be in the past");
         return false;
       }
       if (!paymentInfo.cvv.match(/^\d{3}$/)) {
@@ -225,7 +240,7 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
                   Total Amount:
                 </span>
                 <span className="text-gray-900 font-bold">
-                  ${totalAmount.toFixed(2)}
+                  {totalAmount.toFixed(2)}
                 </span>
               </div>
             </div>
@@ -263,7 +278,11 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
                     id="cardName"
                     name="cardName"
                     value={paymentInfo.cardName}
-                    onChange={handlePaymentChange}
+                    onChange={e => {
+                      // Only allow letters and spaces
+                      const value = e.target.value.replace(/[^A-Za-z ]/g, "");
+                      setPaymentInfo({ ...paymentInfo, cardName: value });
+                    }}
                     required
                     className="mt-1"
                     placeholder="Enter cardholder name"
@@ -370,7 +389,7 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
                     Processing...
                   </>
                 ) : (
-                  `Pay $${totalAmount.toFixed(2)}`
+                  `Pay ${totalAmount.toFixed(2)}`
                 )}
               </Button>
             </div>

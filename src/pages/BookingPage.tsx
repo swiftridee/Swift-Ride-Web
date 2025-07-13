@@ -40,6 +40,14 @@ const convertTo24Hour = (time12h: string) => {
   return `${hours.padStart(2, "0")}:${minutes}`;
 };
 
+// Helper function to format yyyy-mm-dd to MM/DD/YYYY
+const formatDateMMDDYYYY = (dateStr: string) => {
+  if (!dateStr) return '';
+  const [yyyy, mm, dd] = dateStr.split('-');
+  if (!yyyy || !mm || !dd) return dateStr;
+  return `${mm}/${dd}/${yyyy}`;
+};
+
 const BookingPage = () => {
   const { id } = useParams<{ id: string }>();
   const [searchParams] = useSearchParams();
@@ -258,8 +266,8 @@ const BookingPage = () => {
     }
 
     // Phone number validation
-    if (!/^\d{11}$/.test(formData.phone)) {
-      toast.error("Phone number must be exactly 11 digits and numeric");
+    if (!/^03\d{2}-\d{7}$/.test(formData.phone)) {
+      toast.error("Phone number must be in the format 0342-6988007");
       return;
     }
 
@@ -656,17 +664,18 @@ const BookingPage = () => {
                       name="phone"
                       value={formData.phone}
                       onChange={e => {
-                        // Only allow numbers
-                        const value = e.target.value.replace(/[^0-9]/g, "");
+                        let value = e.target.value.replace(/[^0-9]/g, "");
+                        if (value.length > 4) value = value.slice(0, 4) + '-' + value.slice(4, 11);
+                        else value = value.slice(0, 4);
                         setFormData(prev => ({ ...prev, phone: value }));
                       }}
                       inputMode="numeric"
-                      pattern="[0-9]{11}"
-                      maxLength={11}
-                      minLength={11}
+                      pattern="03[0-9]{2}-[0-9]{7}"
+                      maxLength={12}
+                      minLength={12}
                       className="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary"
                       required
-                      placeholder="e.g. 03XXXXXXXXX"
+                      placeholder="03XX-XXXXXXX"
                     />
                   </div>
 
@@ -761,6 +770,9 @@ const BookingPage = () => {
                       required
                     />
                   </div>
+                  {formData.pickupDate && (
+                    <div className="text-sm text-gray-500 mt-1">Selected: {formatDateMMDDYYYY(formData.pickupDate)}</div>
+                  )}
 
                   <div>
                     <label
@@ -791,7 +803,7 @@ const BookingPage = () => {
                     <label className="block text-gray-700 mb-2">Return Date</label>
                     <input
                       type="text"
-                      value={formData.returnDate}
+                      value={formatDateMMDDYYYY(formData.returnDate)}
                       readOnly
                       className="w-full p-3 border border-gray-200 bg-gray-100 rounded focus:outline-none"
                       tabIndex={-1}
@@ -837,13 +849,19 @@ const BookingPage = () => {
                           id="coRiderPhone"
                           name="phone"
                           value={sharedRiderInfo.phone}
-                          onChange={handleSharedRiderChange}
+                          onChange={e => {
+                            let value = e.target.value.replace(/[^0-9]/g, "");
+                            if (value.length > 4) value = value.slice(0, 4) + '-' + value.slice(4, 11);
+                            else value = value.slice(0, 4);
+                            setSharedRiderInfo(prev => ({ ...prev, phone: value }));
+                          }}
                           inputMode="numeric"
-                          pattern="[0-9]{11}"
-                          maxLength={11}
-                          minLength={11}
+                          pattern="03[0-9]{2}-[0-9]{7}"
+                          maxLength={12}
+                          minLength={12}
                           className="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary"
                           required
+                          placeholder="03XX-XXXXXXX"
                         />
                       </div>
                       <div className="md:col-span-2 mb-4">
