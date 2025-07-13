@@ -223,7 +223,7 @@ const BookingDetails = () => {
               )}
 
               {/* Notes */}
-              {booking.notes && (
+              {booking?.notes && (
                 <div className="mt-6">
                   <h2 className="text-lg font-semibold mb-2">
                     Additional Notes

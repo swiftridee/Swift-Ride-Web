@@ -257,6 +257,12 @@ const BookingPage = () => {
       return;
     }
 
+    // Phone number validation
+    if (!/^\d{11}$/.test(formData.phone)) {
+      toast.error("Phone number must be exactly 11 digits and numeric");
+      return;
+    }
+
     if (!vehicle?._id) {
       toast.error("Vehicle information is missing");
       return;
@@ -649,9 +655,18 @@ const BookingPage = () => {
                       id="phone"
                       name="phone"
                       value={formData.phone}
-                      onChange={handleChange}
+                      onChange={e => {
+                        // Only allow numbers
+                        const value = e.target.value.replace(/[^0-9]/g, "");
+                        setFormData(prev => ({ ...prev, phone: value }));
+                      }}
+                      inputMode="numeric"
+                      pattern="[0-9]{11}"
+                      maxLength={11}
+                      minLength={11}
                       className="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary"
                       required
+                      placeholder="e.g. 03XXXXXXXXX"
                     />
                   </div>
 
@@ -771,6 +786,7 @@ const BookingPage = () => {
                     </select>
                   </div>
 
+                  {/* Return Date and Time (read-only) */}
                   <div>
                     <label className="block text-gray-700 mb-2">Return Date</label>
                     <input
