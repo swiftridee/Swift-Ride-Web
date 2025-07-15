@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Helmet } from "react-helmet";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
@@ -8,6 +8,12 @@ import Footer from "@/components/Footer";
 import { provinces, cities, locationData } from "@/data/locationData";
 import { UserProfile } from "@/types";
 import { auth } from "@/utils/axios";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+} from "@/components/ui/dropdown-menu";
 
 const Profile = () => {
   const { user, updateUser } = useUser();
@@ -20,18 +26,17 @@ const Profile = () => {
     dob: "",
     gender: "male" as "male" | "female" | "other",
     cnic: user?.cnic,
-    province: "",
     city: "",
-    postalCode: "",
   });
 
   const [isLoading, setIsLoading] = useState(false);
-  const [availableCities, setAvailableCities] = useState<string[]>([]);
   const [profileImage, setProfileImage] = useState<string | null>(
     user?.profile?.profileImage || null
   );
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [isUploading, setIsUploading] = useState(false);
+
+  const triggerRef = useRef<HTMLButtonElement | null>(null);
 
   // Redirect if not logged in
   useEffect(() => {
@@ -55,13 +60,6 @@ const Profile = () => {
             if (latestUser.profile.profileImage) {
               setProfileImage(latestUser.profile.profileImage);
             }
-            if (latestUser.profile.province) {
-              setAvailableCities(
-                locationData[
-                  latestUser.profile.province as keyof typeof locationData
-                ] || []
-              );
-            }
           }
         } catch (error) {
           // Optionally handle error (e.g., show toast)
@@ -76,13 +74,6 @@ const Profile = () => {
         // Set profile image if available
         if (user.profile.profileImage) {
           setProfileImage(user.profile.profileImage);
-        }
-        // Set available cities based on province
-        if (user.profile.province) {
-          setAvailableCities(
-            locationData[user.profile.province as keyof typeof locationData] ||
-              []
-          );
         }
       }
     }
@@ -113,15 +104,7 @@ const Profile = () => {
       return;
     }
 
-    // Handle province change to update city dropdown
-    if (name === "province") {
-      setFormData((prev) => ({ ...prev, [name]: value, city: "" }));
-      setAvailableCities(
-        locationData[value as keyof typeof locationData] || []
-      );
-    } else {
-      setFormData((prev) => ({ ...prev, [name]: value }));
-    }
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -159,11 +142,6 @@ const Profile = () => {
     e.preventDefault();
 
     // Validate that province and city are selected
-    if (!formData.province) {
-      toast.error("Please select a province");
-      return;
-    }
-
     if (!formData.city) {
       toast.error("Please select a city");
       return;
@@ -243,29 +221,29 @@ const Profile = () => {
                     </div>
 
                     {/* Upload button overlay */}
-                    <label
+                    {/* <label
                       htmlFor="profile-image"
                       className="absolute bottom-0 right-0 w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center cursor-pointer hover:bg-primary/80 transition-colors shadow-lg"
                       title="Upload profile picture"
                     >
                       <i className="fas fa-camera text-sm"></i>
-                    </label>
+                    </label> */}
 
-                    <input
+                    {/* <input
                       id="profile-image"
                       type="file"
                       accept="image/*"
                       onChange={handleImageUpload}
                       className="hidden"
-                    />
+                    /> */}
                   </div>
 
                   <div>
                     <h2 className="text-xl font-semibold">{user.name}</h2>
                     <p className="text-gray-600">{user.email}</p>
-                    <p className="text-sm text-gray-500 mt-1">
+                    {/* <p className="text-sm text-gray-500 mt-1">
                       Click the camera icon to upload a profile picture
-                    </p>
+                    </p> */}
                   </div>
                 </div>
 
@@ -290,7 +268,7 @@ const Profile = () => {
                   </div>
 
                   {/* Email */}
-                  <div>
+                  {/* <div>
                     <label
                       htmlFor="email"
                       className="block text-sm font-medium text-gray-700"
@@ -309,10 +287,10 @@ const Profile = () => {
                     <p className="mt-1 text-xs text-gray-500">
                       Contact support to change your email
                     </p>
-                  </div>
+                  </div> */}
 
                   {/* Date of Birth */}
-                  <div>
+                  {/* <div>
                     <label
                       htmlFor="dob"
                       className="block text-sm font-medium text-gray-700"
@@ -327,6 +305,70 @@ const Profile = () => {
                       onChange={handleChange}
                       className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary"
                     />
+                  </div> */}
+
+                  {/* CNIC */}
+                  <div>
+                    <label
+                      htmlFor="cnic"
+                      className="block text-sm font-medium text-gray-700"
+                    >
+                      CNIC (without dashes)
+                    </label>
+                    <input
+                      type="text"
+                      id="cnic"
+                      name="cnic"
+                      value={formData.cnic}
+                      onChange={handleChange}
+                      placeholder="00000-0000000-0"
+                      className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary"
+                    />
+                  </div>
+
+                  {/* City Dropdown */}
+                  <div>
+                    <label
+                      htmlFor="city"
+                      className="block text-sm font-medium text-gray-700"
+                    >
+                      City <span className="text-red-500">*</span>
+                    </label>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <button
+                          type="button"
+                          ref={triggerRef}
+                          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm text-left focus:outline-none focus:ring-primary focus:border-primary"
+                        >
+                          {formData.city || "Select City"}
+                        </button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent
+                        className="max-h-[30vh] overflow-y-auto"
+                        style={{
+                          minWidth: triggerRef.current
+                            ? `${triggerRef.current.offsetWidth}px`
+                            : undefined,
+                        }}
+                      >
+                        {cities.map((city) => (
+                          <DropdownMenuItem
+                            key={city}
+                            onSelect={() =>
+                              setFormData((prev) => ({ ...prev, city }))
+                            }
+                          >
+                            {city}
+                          </DropdownMenuItem>
+                        ))}
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                    {!formData.city && (
+                      <p className="mt-1 text-xs text-gray-500">
+                        Please select a city
+                      </p>
+                    )}
                   </div>
 
                   {/* Gender */}
@@ -358,99 +400,6 @@ const Profile = () => {
                         <span className="ml-2">Female</span>
                       </label>
                     </div>
-                  </div>
-
-                  {/* CNIC */}
-                  <div>
-                    <label
-                      htmlFor="cnic"
-                      className="block text-sm font-medium text-gray-700"
-                    >
-                      CNIC (with dashes)
-                    </label>
-                    <input
-                      type="text"
-                      id="cnic"
-                      name="cnic"
-                      value={formData.cnic}
-                      onChange={handleChange}
-                      placeholder="00000-0000000-0"
-                      className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary"
-                    />
-                  </div>
-
-                  {/* Province */}
-                  <div>
-                    <label
-                      htmlFor="province"
-                      className="block text-sm font-medium text-gray-700"
-                    >
-                      Province <span className="text-red-500">*</span>
-                    </label>
-                    <select
-                      id="province"
-                      name="province"
-                      value={formData.province}
-                      onChange={handleChange}
-                      className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary"
-                      required
-                    >
-                      <option value="">Select Province</option>
-                      {provinces.map((province) => (
-                        <option key={province} value={province}>
-                          {province}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-
-                  {/* City - Updated with dynamic options based on province */}
-                  <div>
-                    <label
-                      htmlFor="city"
-                      className="block text-sm font-medium text-gray-700"
-                    >
-                      City <span className="text-red-500">*</span>
-                    </label>
-                    <select
-                      id="city"
-                      name="city"
-                      value={formData.city}
-                      onChange={handleChange}
-                      className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary"
-                      disabled={!formData.province}
-                      required
-                    >
-                      <option value="">Select City</option>
-                      {availableCities.map((city) => (
-                        <option key={city} value={city}>
-                          {city}
-                        </option>
-                      ))}
-                    </select>
-                    {!formData.province && (
-                      <p className="mt-1 text-xs text-gray-500">
-                        Please select a province first
-                      </p>
-                    )}
-                  </div>
-
-                  {/* Postal Code */}
-                  <div>
-                    <label
-                      htmlFor="postalCode"
-                      className="block text-sm font-medium text-gray-700"
-                    >
-                      Postal Code
-                    </label>
-                    <input
-                      type="text"
-                      id="postalCode"
-                      name="postalCode"
-                      value={formData.postalCode}
-                      onChange={handleChange}
-                      className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary"
-                    />
                   </div>
                 </div>
 
