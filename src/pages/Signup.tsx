@@ -109,7 +109,6 @@ const Signup = () => {
         formData.name,
         formData.email,
         formData.password,
-        "",
         formData.cnic.replace(/-/g, "")
       );
 

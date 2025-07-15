@@ -40,6 +40,14 @@ const convertTo24Hour = (time12h: string) => {
   return `${hours.padStart(2, "0")}:${minutes}`;
 };
 
+// Helper function to format yyyy-mm-dd to MM/DD/YYYY
+const formatDateMMDDYYYY = (dateStr: string) => {
+  if (!dateStr) return '';
+  const [yyyy, mm, dd] = dateStr.split('-');
+  if (!yyyy || !mm || !dd) return dateStr;
+  return `${mm}/${dd}/${yyyy}`;
+};
+
 const BookingPage = () => {
   const { id } = useParams<{ id: string }>();
   const [searchParams] = useSearchParams();
@@ -147,6 +155,53 @@ const BookingPage = () => {
     fetchVehicle();
   }, [id, navigate]);
 
+  // Auto-calculate return date and return time based on rental plan, pickup date, and pickup time
+  useEffect(() => {
+    if (!formData.pickupDate || !formData.pickupTime) return;
+    let daysToAdd = 0;
+    let returnTime = formData.pickupTime;
+    switch (formData.rentalPlan) {
+      case "2day":
+        daysToAdd = 2;
+        break;
+      case "3day":
+        daysToAdd = 3;
+        break;
+      case "1week":
+        daysToAdd = 7;
+        break;
+      case "12hour":
+      default:
+        daysToAdd = 0;
+        // Calculate return time as pickup time + 12 hours
+        const [time, modifier] = formData.pickupTime.split(" ");
+        let [hours, minutes] = time.split(":");
+        let hoursNum = parseInt(hours, 10);
+        if (modifier === "PM" && hoursNum !== 12) hoursNum += 12;
+        if (modifier === "AM" && hoursNum === 12) hoursNum = 0;
+        hoursNum += 12;
+        if (hoursNum >= 24) hoursNum -= 24;
+        let newModifier = hoursNum >= 12 ? "PM" : "AM";
+        let displayHour = hoursNum % 12;
+        if (displayHour === 0) displayHour = 12;
+        const formattedHour = String(displayHour).padStart(2, '0');
+        returnTime = `${formattedHour}:${minutes} ${newModifier}`;
+        break;
+    }
+    const pickup = new Date(formData.pickupDate);
+    if (isNaN(pickup.getTime())) return;
+    const returnDate = new Date(pickup);
+    returnDate.setDate(pickup.getDate() + daysToAdd);
+    // Format as yyyy-mm-dd for input type="date"
+    const yyyy = returnDate.getFullYear();
+    const mm = String(returnDate.getMonth() + 1).padStart(2, '0');
+    const dd = String(returnDate.getDate()).padStart(2, '0');
+    const formattedDate = `${yyyy}-${mm}-${dd}`;
+    if (formData.returnDate !== formattedDate || formData.returnTime !== returnTime) {
+      setFormData((prev) => ({ ...prev, returnDate: formattedDate, returnTime }));
+    }
+  }, [formData.pickupDate, formData.pickupTime, formData.rentalPlan]);
+
   // Calculate price based on selected options
   const calculateTotalPrice = () => {
     if (!vehicle) return 0;
@@ -207,6 +262,12 @@ const BookingPage = () => {
     // Validate shared rider info if shared ride is enabled
     if (enableSharedRide && (!sharedRiderInfo.name || !sharedRiderInfo.phone)) {
       toast.error("Please fill in all shared rider information");
+      return;
+    }
+
+    // Phone number validation
+    if (!/^03\d{2}-\d{7}$/.test(formData.phone)) {
+      toast.error("Phone number must be in the format 0342-6988007");
       return;
     }
 
@@ -602,9 +663,19 @@ const BookingPage = () => {
                       id="phone"
                       name="phone"
                       value={formData.phone}
-                      onChange={handleChange}
+                      onChange={e => {
+                        let value = e.target.value.replace(/[^0-9]/g, "");
+                        if (value.length > 4) value = value.slice(0, 4) + '-' + value.slice(4, 11);
+                        else value = value.slice(0, 4);
+                        setFormData(prev => ({ ...prev, phone: value }));
+                      }}
+                      inputMode="numeric"
+                      pattern="03[0-9]{2}-[0-9]{7}"
+                      maxLength={12}
+                      minLength={12}
                       className="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary"
                       required
+                      placeholder="03XX-XXXXXXX"
                     />
                   </div>
 
@@ -699,6 +770,9 @@ const BookingPage = () => {
                       required
                     />
                   </div>
+                  {formData.pickupDate && (
+                    <div className="text-sm text-gray-500 mt-1">Selected: {formatDateMMDDYYYY(formData.pickupDate)}</div>
+                  )}
 
                   <div>
                     <label
@@ -724,65 +798,36 @@ const BookingPage = () => {
                     </select>
                   </div>
 
+                  {/* Return Date and Time (read-only) */}
                   <div>
-                    <label
-                      className="block text-gray-700 mb-2"
-                      htmlFor="returnDate"
-                    >
-                      Return Date
-                    </label>
+                    <label className="block text-gray-700 mb-2">Return Date</label>
                     <input
-                      type="date"
-                      id="returnDate"
-                      name="returnDate"
-                      value={formData.returnDate}
-                      onChange={handleChange}
-                      className="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary"
-                      min={
-                        formData.pickupDate ||
-                        new Date().toISOString().split("T")[0]
-                      }
-                      required
+                      type="text"
+                      value={formatDateMMDDYYYY(formData.returnDate)}
+                      readOnly
+                      className="w-full p-3 border border-gray-200 bg-gray-100 rounded focus:outline-none"
+                      tabIndex={-1}
                     />
                   </div>
-
                   <div>
-                    <label
-                      className="block text-gray-700 mb-2"
-                      htmlFor="returnTime"
-                    >
-                      Return Time
-                    </label>
-                    <select
-                      id="returnTime"
-                      name="returnTime"
+                    <label className="block text-gray-700 mb-2">Return Time</label>
+                    <input
+                      type="text"
                       value={formData.returnTime}
-                      onChange={handleChange}
-                      className="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary"
-                      required
-                    >
-                      <option value="">Select Return Time</option>
-                      {timeOptions.map((time) => (
-                        <option key={`return-time-${time}`} value={time}>
-                          {time}
-                        </option>
-                      ))}
-                    </select>
+                      readOnly
+                      className="w-full p-3 border border-gray-200 bg-gray-100 rounded focus:outline-none"
+                      tabIndex={-1}
+                    />
                   </div>
                 </div>
 
                 {/* Shared Rider Fields - Show when shared ride is enabled */}
                 {enableSharedRide && (
                   <div className="mb-6 p-4 bg-blue-50 border border-blue-100 rounded-lg">
-                    <h3 className="font-medium text-blue-800 mb-3">
-                      Co-rider Information
-                    </h3>
+                    <h3 className="font-medium text-blue-800 mb-3">Co-rider Information</h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div>
-                        <label
-                          className="block text-gray-700 mb-2"
-                          htmlFor="coRiderName"
-                        >
+                      <div className="mb-4">
+                        <label className="block text-gray-700 mb-2" htmlFor="coRiderName">
                           Co-rider Name
                         </label>
                         <input
@@ -795,11 +840,8 @@ const BookingPage = () => {
                           required
                         />
                       </div>
-                      <div>
-                        <label
-                          className="block text-gray-700 mb-2"
-                          htmlFor="coRiderPhone"
-                        >
+                      <div className="mb-4">
+                        <label className="block text-gray-700 mb-2" htmlFor="coRiderPhone">
                           Co-rider Phone
                         </label>
                         <input
@@ -807,16 +849,23 @@ const BookingPage = () => {
                           id="coRiderPhone"
                           name="phone"
                           value={sharedRiderInfo.phone}
-                          onChange={handleSharedRiderChange}
+                          onChange={e => {
+                            let value = e.target.value.replace(/[^0-9]/g, "");
+                            if (value.length > 4) value = value.slice(0, 4) + '-' + value.slice(4, 11);
+                            else value = value.slice(0, 4);
+                            setSharedRiderInfo(prev => ({ ...prev, phone: value }));
+                          }}
+                          inputMode="numeric"
+                          pattern="03[0-9]{2}-[0-9]{7}"
+                          maxLength={12}
+                          minLength={12}
                           className="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary"
                           required
+                          placeholder="03XX-XXXXXXX"
                         />
                       </div>
-                      <div className="col-span-2">
-                        <label
-                          className="block text-gray-700 mb-2"
-                          htmlFor="coRiderEmail"
-                        >
+                      <div className="md:col-span-2 mb-4">
+                        <label className="block text-gray-700 mb-2" htmlFor="coRiderEmail">
                           Co-rider Email (Optional)
                         </label>
                         <input
@@ -828,8 +877,7 @@ const BookingPage = () => {
                           className="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary"
                         />
                         <p className="text-sm text-blue-600 mt-2">
-                          The total cost will be split equally (50%) between
-                          both riders. Both will receive booking confirmation.
+                          The total cost will be split equally (50%) between both riders. Both will receive booking confirmation.
                         </p>
                       </div>
                     </div>
