@@ -63,7 +63,7 @@ const Navbar = () => {
       e.preventDefault();
       window.scrollTo({
         top: 0,
-        behavior: 'smooth'
+        behavior: "smooth",
       });
     }
   };
@@ -95,7 +95,11 @@ const Navbar = () => {
         <div className="w-full max-w-none px-4">
           <div className="flex justify-between items-center">
             {/* Logo */}
-            <Link to="/" onClick={e => scrollToTop(e, '/')} className="flex items-center">
+            <Link
+              to="/"
+              onClick={(e) => scrollToTop(e, "/")}
+              className="flex items-center"
+            >
               <span className="text-2xl font-bold text-primary">
                 Swift<span className="text-secondary">Ride</span>
               </span>
@@ -105,7 +109,7 @@ const Navbar = () => {
             <div className="hidden md:flex items-center space-x-8">
               <Link
                 to="/"
-                onClick={e => scrollToTop(e, '/')}
+                onClick={(e) => scrollToTop(e, "/")}
                 className={`nav-link ${
                   location.pathname === "/" ? "active-nav-link" : ""
                 }`}
@@ -141,28 +145,28 @@ const Navbar = () => {
                 >
                   <Link
                     to="/cars"
-                    onClick={e => scrollToTop(e, '/cars')}
+                    onClick={(e) => scrollToTop(e, "/cars")}
                     className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                   >
                     Cars
                   </Link>
                   <Link
                     to="/buses"
-                    onClick={e => scrollToTop(e, '/buses')}
+                    onClick={(e) => scrollToTop(e, "/buses")}
                     className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                   >
                     Buses
                   </Link>
                   <Link
                     to="/minibuses"
-                    onClick={e => scrollToTop(e, '/minibuses')}
+                    onClick={(e) => scrollToTop(e, "/minibuses")}
                     className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                   >
                     Mini Buses
                   </Link>
                   <Link
                     to="/coasters"
-                    onClick={e => scrollToTop(e, '/coasters')}
+                    onClick={(e) => scrollToTop(e, "/coasters")}
                     className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                   >
                     Coasters
@@ -172,7 +176,7 @@ const Navbar = () => {
 
               <Link
                 to="/about"
-                onClick={e => scrollToTop(e, '/about')}
+                onClick={(e) => scrollToTop(e, "/about")}
                 className={`nav-link ${
                   location.pathname === "/about" ? "active-nav-link" : ""
                 }`}
@@ -181,7 +185,7 @@ const Navbar = () => {
               </Link>
               <Link
                 to="/contact"
-                onClick={e => scrollToTop(e, '/contact')}
+                onClick={(e) => scrollToTop(e, "/contact")}
                 className={`nav-link ${
                   location.pathname === "/contact" ? "active-nav-link" : ""
                 }`}
@@ -192,22 +196,6 @@ const Navbar = () => {
 
             {/* Desktop Search and Auth */}
             <div className="hidden md:flex items-center space-x-4">
-              <form
-                onSubmit={handleSearch}
-                className="flex items-center bg-gray-100 rounded-full px-3 py-1"
-              >
-                <input
-                  type="text"
-                  placeholder="Search..."
-                  className="bg-transparent border-none focus:outline-none text-sm w-32 lg:w-auto"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                />
-                <button type="submit" className="ml-2 text-gray-600">
-                  <i className="fas fa-search"></i>
-                </button>
-              </form>
-
               {user ? (
                 <div className="relative" ref={profileDropdownRef}>
                   <button
@@ -342,7 +330,7 @@ const Navbar = () => {
               <div className="p-6 space-y-6">
                 <Link
                   to="/"
-                  onClick={e => scrollToTop(e, '/')}
+                  onClick={(e) => scrollToTop(e, "/")}
                   className={`block py-3 text-lg ${
                     location.pathname === "/"
                       ? "text-primary font-medium"
@@ -385,28 +373,40 @@ const Navbar = () => {
                   >
                     <Link
                       to="/cars"
-                      onClick={e => { scrollToTop(e, '/cars'); setMobileMenuOpen(false); }}
+                      onClick={(e) => {
+                        scrollToTop(e, "/cars");
+                        setMobileMenuOpen(false);
+                      }}
                       className="block py-2 text-gray-600 hover:text-primary"
                     >
                       Cars
                     </Link>
                     <Link
                       to="/buses"
-                      onClick={e => { scrollToTop(e, '/buses'); setMobileMenuOpen(false); }}
+                      onClick={(e) => {
+                        scrollToTop(e, "/buses");
+                        setMobileMenuOpen(false);
+                      }}
                       className="block py-2 text-gray-600 hover:text-primary"
                     >
                       Buses
                     </Link>
                     <Link
                       to="/minibuses"
-                      onClick={e => { scrollToTop(e, '/minibuses'); setMobileMenuOpen(false); }}
+                      onClick={(e) => {
+                        scrollToTop(e, "/minibuses");
+                        setMobileMenuOpen(false);
+                      }}
                       className="block py-2 text-gray-600 hover:text-primary"
                     >
                       Mini Buses
                     </Link>
                     <Link
                       to="/coasters"
-                      onClick={e => { scrollToTop(e, '/coasters'); setMobileMenuOpen(false); }}
+                      onClick={(e) => {
+                        scrollToTop(e, "/coasters");
+                        setMobileMenuOpen(false);
+                      }}
                       className="block py-2 text-gray-600 hover:text-primary"
                     >
                       Coasters
@@ -416,7 +416,10 @@ const Navbar = () => {
 
                 <Link
                   to="/about"
-                  onClick={e => { scrollToTop(e, '/about'); setMobileMenuOpen(false); }}
+                  onClick={(e) => {
+                    scrollToTop(e, "/about");
+                    setMobileMenuOpen(false);
+                  }}
                   className={`block py-3 text-lg ${
                     location.pathname === "/about"
                       ? "text-primary font-medium"
@@ -427,7 +430,10 @@ const Navbar = () => {
                 </Link>
                 <Link
                   to="/contact"
-                  onClick={e => { scrollToTop(e, '/contact'); setMobileMenuOpen(false); }}
+                  onClick={(e) => {
+                    scrollToTop(e, "/contact");
+                    setMobileMenuOpen(false);
+                  }}
                   className={`block py-3 text-lg ${
                     location.pathname === "/contact"
                       ? "text-primary font-medium"

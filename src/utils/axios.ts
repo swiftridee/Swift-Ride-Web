@@ -89,6 +89,7 @@ export const auth = {
 
   // Update user profile
   async updateProfile(data: {
+    _id?: string;
     name?: string;
     city?: string;
     cnic?: string;
@@ -112,16 +113,28 @@ export const auth = {
   },
 
   // Forgot password - send OTP
-  async forgotPassword(email: string): Promise<{ success: boolean; message: string }> {
-    const response = await axiosInstance.post<{ success: boolean; message: string }>("auth/forgot-password", {
+  async forgotPassword(
+    email: string
+  ): Promise<{ success: boolean; message: string }> {
+    const response = await axiosInstance.post<{
+      success: boolean;
+      message: string;
+    }>("auth/forgot-password", {
       email,
     });
     return response.data;
   },
 
   // Verify OTP
-  async verifyOTP(email: string, otp: string): Promise<{ success: boolean; message: string; token?: string }> {
-    const response = await axiosInstance.post<{ success: boolean; message: string; token?: string }>("auth/verify-otp", {
+  async verifyOTP(
+    email: string,
+    otp: string
+  ): Promise<{ success: boolean; message: string; token?: string }> {
+    const response = await axiosInstance.post<{
+      success: boolean;
+      message: string;
+      token?: string;
+    }>("auth/verify-otp", {
       email,
       otp,
     });
@@ -129,8 +142,15 @@ export const auth = {
   },
 
   // Reset password
-  async resetPassword(email: string, otp: string, newPassword: string): Promise<{ success: boolean; message: string }> {
-    const response = await axiosInstance.post<{ success: boolean; message: string }>("auth/reset-password", {
+  async resetPassword(
+    email: string,
+    otp: string,
+    newPassword: string
+  ): Promise<{ success: boolean; message: string }> {
+    const response = await axiosInstance.post<{
+      success: boolean;
+      message: string;
+    }>("auth/reset-password", {
       email,
       otp,
       newPassword,
