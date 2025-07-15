@@ -38,18 +38,45 @@ const Profile = () => {
     if (!user) {
       navigate("/login");
     } else {
+      // Fetch latest user profile from API
+      (async () => {
+        try {
+          const latestUser = await auth.getCurrentUser(user?.id);
+          updateUser(latestUser);
+          // Optionally update form data with latest profile
+          if (latestUser.profile) {
+            setFormData((prev) => ({
+              ...prev,
+              ...latestUser.profile,
+              name: latestUser.name || prev.name,
+              email: latestUser.email || prev.email,
+              cnic: latestUser.cnic || prev.cnic,
+            }));
+            if (latestUser.profile.profileImage) {
+              setProfileImage(latestUser.profile.profileImage);
+            }
+            if (latestUser.profile.province) {
+              setAvailableCities(
+                locationData[
+                  latestUser.profile.province as keyof typeof locationData
+                ] || []
+              );
+            }
+          }
+        } catch (error) {
+          // Optionally handle error (e.g., show toast)
+        }
+      })();
       // Populate form with user data if available
       if (user.profile) {
         setFormData((prev) => ({
           ...prev,
           ...user.profile,
         }));
-
         // Set profile image if available
         if (user.profile.profileImage) {
           setProfileImage(user.profile.profileImage);
         }
-
         // Set available cities based on province
         if (user.profile.province) {
           setAvailableCities(
@@ -59,7 +86,7 @@ const Profile = () => {
         }
       }
     }
-  }, [user, navigate]);
+  }, [navigate]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>

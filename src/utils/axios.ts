@@ -79,11 +79,11 @@ export const auth = {
   },
 
   // Get current user
-  async getCurrentUser(): Promise<User> {
+  async getCurrentUser(id: string): Promise<User> {
     const response = await axiosInstance.get<{
       success: boolean;
       data: { user: User };
-    }>("/auth/me");
+    }>("/auth/profile/" + id.toString());
     return response.data.data.user;
   },
 
