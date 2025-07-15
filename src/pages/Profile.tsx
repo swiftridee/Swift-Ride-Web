@@ -48,18 +48,18 @@ const Profile = () => {
         try {
           const latestUser = await auth.getCurrentUser(user?.id);
           updateUser(latestUser);
-          // Optionally update form data with latest profile
-          if (latestUser.profile) {
-            setFormData((prev) => ({
-              ...prev,
-              ...latestUser.profile,
-              name: latestUser.name || prev.name,
-              email: latestUser.email || prev.email,
-              cnic: latestUser.cnic || prev.cnic,
-            }));
-            if (latestUser.profile.profileImage) {
-              setProfileImage(latestUser.profile.profileImage);
-            }
+          // Update form data with latest user info, handling city at root or in profile
+          setFormData((prev) => ({
+            ...prev,
+            city: latestUser.city || latestUser.profile?.city || prev.city,
+            name: latestUser.name || prev.name,
+            email: latestUser.email || prev.email,
+            cnic: latestUser.cnic || prev.cnic,
+            gender: latestUser.gender || prev.gender,
+            // add other fields as needed
+          }));
+          if (latestUser.profile?.profileImage) {
+            setProfileImage(latestUser.profile.profileImage);
           }
         } catch (error) {
           // Optionally handle error (e.g., show toast)
