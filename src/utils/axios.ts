@@ -1,7 +1,8 @@
 import axios from "axios";
 import { User, AuthResponse, ErrorResponse } from "@/types";
 
-const API_URL = import.meta.env.VITE_API_URL || "https://swift-ride-server.vercel.app/api";
+const API_URL =
+  import.meta.env.VITE_API_URL || "https://swift-ride-server.vercel.app/api";
 
 // Create axios instance
 const axiosInstance = axios.create({
@@ -153,6 +154,18 @@ export const auth = {
       otp,
       newPassword,
     });
+    return response.data;
+  },
+
+  // Update password
+  async updatePassword(
+    currentPassword: string,
+    newPassword: string
+  ): Promise<{ success: boolean; message: string }> {
+    const response = await axiosInstance.put<{
+      success: boolean;
+      message: string;
+    }>("/auth/update-password", { currentPassword, newPassword });
     return response.data;
   },
 };

@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { useUser } from "@/contexts/UserContext";
 import Navbar from "@/components/Navbar";
+import { auth } from "@/utils/axios";
 
 const Settings = () => {
   const { user } = useUser();
@@ -42,7 +43,7 @@ const Settings = () => {
     }));
   };
 
-  const handlePasswordSubmit = (e: React.FormEvent) => {
+  const handlePasswordSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     // Validate passwords
@@ -51,17 +52,26 @@ const Settings = () => {
       return;
     }
 
-    // Simulate password change
     setIsLoading(true);
-    setTimeout(() => {
-      toast.success("Password updated successfully");
-      setPasswordForm({
-        currentPassword: "",
-        newPassword: "",
-        confirmPassword: "",
-      });
-      setIsLoading(false);
-    }, 1000);
+    try {
+      const res = await auth.updatePassword(
+        passwordForm.currentPassword,
+        passwordForm.newPassword
+      );
+      if (res.success) {
+        toast.success("Password updated successfully");
+        setPasswordForm({
+          currentPassword: "",
+          newPassword: "",
+          confirmPassword: "",
+        });
+      } else {
+        toast.error(res.message || "Failed to update password");
+      }
+    } catch (error: any) {
+      toast.error(error.response?.data?.message || "Failed to update password");
+    }
+    setIsLoading(false);
   };
 
   const handleEmailPrefChange = (e: React.ChangeEvent<HTMLInputElement>) => {
