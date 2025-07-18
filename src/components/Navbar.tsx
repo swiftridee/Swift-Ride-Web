@@ -307,7 +307,7 @@ const Navbar = () => {
             )}
 
             {/* Search Bar */}
-            <div className="p-6 border-b border-gray-200">
+            {/* <div className="p-6 border-b border-gray-200">
               <form
                 onSubmit={handleSearch}
                 className="flex items-center bg-gray-100 rounded-full px-4 py-3"
@@ -323,15 +323,15 @@ const Navbar = () => {
                   <i className="fas fa-search"></i>
                 </button>
               </form>
-            </div>
+            </div> */}
 
             {/* Navigation Links */}
             <div className="flex-1 overflow-y-auto">
-              <div className="p-6 space-y-6">
+              <div className="p-6 space-y-3">
                 <Link
                   to="/"
                   onClick={(e) => scrollToTop(e, "/")}
-                  className={`block py-3 text-lg ${
+                  className={`block py-2 text-lg ${
                     location.pathname === "/"
                       ? "text-primary font-medium"
                       : "text-gray-700"
@@ -339,88 +339,13 @@ const Navbar = () => {
                 >
                   Home
                 </Link>
-
-                {/* Mobile Vehicle Dropdown */}
-                <div>
-                  <button
-                    onClick={toggleVehicleDropdown}
-                    className="flex items-center justify-between w-full py-3 text-left text-lg"
-                  >
-                    <span
-                      className={`${
-                        ["/cars", "/buses", "/minibuses", "/coasters"].includes(
-                          location.pathname
-                        )
-                          ? "text-primary font-medium"
-                          : "text-gray-700"
-                      }`}
-                    >
-                      Vehicles
-                    </span>
-                    <i
-                      className={`fas fa-chevron-${
-                        vehicleDropdownOpen ? "up" : "down"
-                      } text-sm transition-transform duration-200`}
-                    ></i>
-                  </button>
-
-                  <div
-                    className={`pl-6 space-y-3 overflow-hidden transition-all duration-200 ${
-                      vehicleDropdownOpen
-                        ? "max-h-64 opacity-100 mt-3"
-                        : "max-h-0 opacity-0"
-                    }`}
-                  >
-                    <Link
-                      to="/cars"
-                      onClick={(e) => {
-                        scrollToTop(e, "/cars");
-                        setMobileMenuOpen(false);
-                      }}
-                      className="block py-2 text-gray-600 hover:text-primary"
-                    >
-                      Cars
-                    </Link>
-                    <Link
-                      to="/buses"
-                      onClick={(e) => {
-                        scrollToTop(e, "/buses");
-                        setMobileMenuOpen(false);
-                      }}
-                      className="block py-2 text-gray-600 hover:text-primary"
-                    >
-                      Buses
-                    </Link>
-                    <Link
-                      to="/minibuses"
-                      onClick={(e) => {
-                        scrollToTop(e, "/minibuses");
-                        setMobileMenuOpen(false);
-                      }}
-                      className="block py-2 text-gray-600 hover:text-primary"
-                    >
-                      Mini Buses
-                    </Link>
-                    <Link
-                      to="/coasters"
-                      onClick={(e) => {
-                        scrollToTop(e, "/coasters");
-                        setMobileMenuOpen(false);
-                      }}
-                      className="block py-2 text-gray-600 hover:text-primary"
-                    >
-                      Coasters
-                    </Link>
-                  </div>
-                </div>
-
                 <Link
                   to="/about"
                   onClick={(e) => {
                     scrollToTop(e, "/about");
                     setMobileMenuOpen(false);
                   }}
-                  className={`block py-3 text-lg ${
+                  className={`block py-2 text-lg ${
                     location.pathname === "/about"
                       ? "text-primary font-medium"
                       : "text-gray-700"
@@ -434,7 +359,7 @@ const Navbar = () => {
                     scrollToTop(e, "/contact");
                     setMobileMenuOpen(false);
                   }}
-                  className={`block py-3 text-lg ${
+                  className={`block py-2 text-lg ${
                     location.pathname === "/contact"
                       ? "text-primary font-medium"
                       : "text-gray-700"
@@ -442,6 +367,67 @@ const Navbar = () => {
                 >
                   Contact
                 </Link>
+                {/* Mobile Vehicle Dropdown */}
+                <div>
+                  <div
+                    className="flex items-center justify-between w-full py-2 text-left text-lg cursor-pointer select-none"
+                    onClick={toggleVehicleDropdown}
+                  >
+                    <span
+                      className={
+                        ["/cars", "/buses", "/minibuses", "/coasters"].includes(
+                          location.pathname
+                        )
+                          ? "text-primary font-medium"
+                          : "text-gray-700"
+                      }
+                    >
+                      Vehicles
+                    </span>
+                    <i
+                      className={`fas fa-chevron-${
+                        vehicleDropdownOpen ? "up" : "down"
+                      } text-sm transition-transform duration-200`}
+                    ></i>
+                  </div>
+                  <div
+                    ref={vehicleDropdownRef}
+                    className={`pl-6 space-y-2 overflow-hidden transition-all duration-200 ${
+                      vehicleDropdownOpen
+                        ? "h-auto opacity-100 mt-2"
+                        : "h-0 opacity-0"
+                    }`}
+                  >
+                    <Link
+                      to="/cars"
+                      // onClick={() => setMobileMenuOpen(false)}
+                      className="block py-2 text-gray-600 hover:text-primary"
+                    >
+                      Cars
+                    </Link>
+                    <Link
+                      to="/buses"
+                      // onClick={() => setMobileMenuOpen(false)}
+                      className="block py-2 text-gray-600 hover:text-primary"
+                    >
+                      Buses
+                    </Link>
+                    <Link
+                      to="/minibuses"
+                      // onClick={() => setMobileMenuOpen(false)}
+                      className="block py-2 text-gray-600 hover:text-primary"
+                    >
+                      Mini Buses
+                    </Link>
+                    <Link
+                      to="/coasters"
+                      // onClick={() => setMobileMenuOpen(false)}
+                      className="block py-2 text-gray-600 hover:text-primary"
+                    >
+                      Coasters
+                    </Link>
+                  </div>
+                </div>
               </div>
             </div>
 
