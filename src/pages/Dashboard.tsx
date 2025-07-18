@@ -10,6 +10,7 @@ const Dashboard = () => {
   const { user } = useUser();
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("upcoming");
+  const [cancelingId, setCancelingId] = useState<string | null>(null);
 
   const { upcoming, completed, cancelled, loading, error, cancelBooking } =
     useBookings();
@@ -50,12 +51,17 @@ const Dashboard = () => {
   return (
     <>
       <Helmet>
-        <title>Dashboard - Swift Ride | Manage Your Vehicle Rental Bookings</title>
+        <title>
+          Dashboard - Swift Ride | Manage Your Vehicle Rental Bookings
+        </title>
         <meta
           name="description"
           content="Manage your Swift Ride bookings, view booking history, and track your vehicle rental activities. Access your upcoming, completed, and cancelled bookings."
         />
-        <meta name="keywords" content="Swift Ride dashboard, booking management, rental history, vehicle bookings, account dashboard" />
+        <meta
+          name="keywords"
+          content="Swift Ride dashboard, booking management, rental history, vehicle bookings, account dashboard"
+        />
       </Helmet>
 
       <Navbar />
@@ -280,6 +286,21 @@ const Dashboard = () => {
                               </div>
                             </div>
                           </div>
+                          {activeTab === "upcoming" && (
+                            <button
+                              className="btn-danger mt-4"
+                              disabled={cancelingId === booking._id}
+                              onClick={async () => {
+                                setCancelingId(booking._id);
+                                await cancelBooking(booking._id);
+                                setCancelingId(null);
+                              }}
+                            >
+                              {cancelingId === booking._id
+                                ? "Cancelling..."
+                                : "Cancel Booking"}
+                            </button>
+                          )}
                         </div>
                       ))
                     )}

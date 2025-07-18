@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet";
 import { useNavigate } from "react-router-dom";
@@ -9,49 +8,49 @@ import Navbar from "@/components/Navbar";
 const Settings = () => {
   const { user } = useUser();
   const navigate = useNavigate();
-  
+
   const [isLoading, setIsLoading] = useState(false);
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  
+
   const [passwordForm, setPasswordForm] = useState({
     currentPassword: "",
     newPassword: "",
-    confirmPassword: ""
+    confirmPassword: "",
   });
 
   const [emailPreferences, setEmailPreferences] = useState({
     bookingConfirmations: true,
     promotions: false,
     newsletters: true,
-    systemUpdates: true
+    systemUpdates: true,
   });
-  
+
   // Redirect if not logged in
   useEffect(() => {
     if (!user) {
       navigate("/login");
     }
   }, [user, navigate]);
-  
+
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setPasswordForm(prev => ({
+    setPasswordForm((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
-  
+
   const handlePasswordSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     // Validate passwords
     if (passwordForm.newPassword !== passwordForm.confirmPassword) {
       toast.error("New passwords do not match");
       return;
     }
-    
+
     // Simulate password change
     setIsLoading(true);
     setTimeout(() => {
@@ -59,20 +58,20 @@ const Settings = () => {
       setPasswordForm({
         currentPassword: "",
         newPassword: "",
-        confirmPassword: ""
+        confirmPassword: "",
       });
       setIsLoading(false);
     }, 1000);
   };
-  
+
   const handleEmailPrefChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, checked } = e.target;
-    setEmailPreferences(prev => ({
+    setEmailPreferences((prev) => ({
       ...prev,
-      [name]: checked
+      [name]: checked,
     }));
   };
-  
+
   const saveEmailPreferences = () => {
     toast.success("Email preferences updated");
   };
@@ -84,37 +83,50 @@ const Settings = () => {
     // Reset form
     e.currentTarget.reset();
   };
-  
+
   if (!user) {
     return null; // Don't render anything if not logged in
   }
-  
+
   return (
     <>
       <Helmet>
         <title>Settings - Swift Ride | Manage Your Account Preferences</title>
-        <meta name="description" content="Manage your Swift Ride account settings including password changes, email preferences, and notification settings for your vehicle rental account." />
-        <meta name="keywords" content="Swift Ride settings, account preferences, password change, email notifications, account security" />
+        <meta
+          name="description"
+          content="Manage your Swift Ride account settings including password changes, email preferences, and notification settings for your vehicle rental account."
+        />
+        <meta
+          name="keywords"
+          content="Swift Ride settings, account preferences, password change, email notifications, account security"
+        />
       </Helmet>
-      
+
       <Navbar />
-      
+
       <main className="pt-24 pb-16 bg-gray-50 min-h-screen">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto">
             <h1 className="text-2xl font-bold mb-6">Account Settings</h1>
-            
+
             {/* Change Password Section */}
             <div className="bg-white rounded-lg shadow-md overflow-hidden mb-6">
               <div className="p-6 border-b border-gray-200">
                 <h2 className="text-lg font-semibold">Change Password</h2>
-                <p className="text-gray-600 text-sm mt-1">Update your password to keep your account secure</p>
+                <p className="text-gray-600 text-sm mt-1">
+                  Update your password to keep your account secure
+                </p>
               </div>
-              
+
               <form onSubmit={handlePasswordSubmit} className="p-6">
                 <div className="space-y-4">
                   <div>
-                    <label htmlFor="currentPassword" className="block text-sm font-medium text-gray-700 mb-1">Current Password</label>
+                    <label
+                      htmlFor="currentPassword"
+                      className="block text-sm font-medium text-gray-700 mb-1"
+                    >
+                      Current Password
+                    </label>
                     <div className="relative">
                       <input
                         type={showCurrentPassword ? "text" : "password"}
@@ -128,15 +140,26 @@ const Settings = () => {
                       <button
                         type="button"
                         className="absolute inset-y-0 right-0 pr-3 flex items-center"
-                        onClick={() => setShowCurrentPassword(!showCurrentPassword)}
+                        onClick={() =>
+                          setShowCurrentPassword(!showCurrentPassword)
+                        }
                       >
-                        <i className={`fas ${showCurrentPassword ? 'fa-eye-slash' : 'fa-eye'} text-gray-400`}></i>
+                        <i
+                          className={`fas ${
+                            showCurrentPassword ? "fa-eye-slash" : "fa-eye"
+                          } text-gray-400`}
+                        ></i>
                       </button>
                     </div>
                   </div>
-                  
+
                   <div>
-                    <label htmlFor="newPassword" className="block text-sm font-medium text-gray-700 mb-1">New Password</label>
+                    <label
+                      htmlFor="newPassword"
+                      className="block text-sm font-medium text-gray-700 mb-1"
+                    >
+                      New Password
+                    </label>
                     <div className="relative">
                       <input
                         type={showNewPassword ? "text" : "password"}
@@ -152,13 +175,22 @@ const Settings = () => {
                         className="absolute inset-y-0 right-0 pr-3 flex items-center"
                         onClick={() => setShowNewPassword(!showNewPassword)}
                       >
-                        <i className={`fas ${showNewPassword ? 'fa-eye-slash' : 'fa-eye'} text-gray-400`}></i>
+                        <i
+                          className={`fas ${
+                            showNewPassword ? "fa-eye-slash" : "fa-eye"
+                          } text-gray-400`}
+                        ></i>
                       </button>
                     </div>
                   </div>
-                  
+
                   <div>
-                    <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 mb-1">Confirm New Password</label>
+                    <label
+                      htmlFor="confirmPassword"
+                      className="block text-sm font-medium text-gray-700 mb-1"
+                    >
+                      Confirm New Password
+                    </label>
                     <div className="relative">
                       <input
                         type={showConfirmPassword ? "text" : "password"}
@@ -172,14 +204,20 @@ const Settings = () => {
                       <button
                         type="button"
                         className="absolute inset-y-0 right-0 pr-3 flex items-center"
-                        onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                        onClick={() =>
+                          setShowConfirmPassword(!showConfirmPassword)
+                        }
                       >
-                        <i className={`fas ${showConfirmPassword ? 'fa-eye-slash' : 'fa-eye'} text-gray-400`}></i>
+                        <i
+                          className={`fas ${
+                            showConfirmPassword ? "fa-eye-slash" : "fa-eye"
+                          } text-gray-400`}
+                        ></i>
                       </button>
                     </div>
                   </div>
                 </div>
-                
+
                 <div className="mt-6">
                   <button
                     type="submit"
@@ -191,14 +229,16 @@ const Settings = () => {
                         <i className="fas fa-spinner fa-spin mr-2"></i>
                         Updating...
                       </span>
-                    ) : "Update Password"}
+                    ) : (
+                      "Update Password"
+                    )}
                   </button>
                 </div>
               </form>
             </div>
-            
+
             {/* General Settings */}
-            <div className="bg-white rounded-lg shadow-md overflow-hidden mb-6">
+            {/* <div className="bg-white rounded-lg shadow-md overflow-hidden mb-6">
               <div className="p-6 border-b border-gray-200">
                 <h2 className="text-lg font-semibold">General Settings</h2>
                 <p className="text-gray-600 text-sm mt-1">Manage your email preferences</p>
@@ -284,10 +324,10 @@ const Settings = () => {
                   </button>
                 </div>
               </div>
-            </div>
-            
+            </div> */}
+
             {/* Help & Feedback */}
-            <div className="bg-white rounded-lg shadow-md overflow-hidden mb-6">
+            {/* <div className="bg-white rounded-lg shadow-md overflow-hidden mb-6">
               <div className="p-6 border-b border-gray-200">
                 <h2 className="text-lg font-semibold">Help & Feedback</h2>
                 <p className="text-gray-600 text-sm mt-1">We'd love to hear from you</p>
@@ -329,7 +369,7 @@ const Settings = () => {
                   </button>
                 </form>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </main>
