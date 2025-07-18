@@ -400,28 +400,28 @@ const Navbar = () => {
                   >
                     <Link
                       to="/cars"
-                      // onClick={() => setMobileMenuOpen(false)}
+                      onClick={() => setMobileMenuOpen(false)}
                       className="block py-2 text-gray-600 hover:text-primary"
                     >
                       Cars
                     </Link>
                     <Link
                       to="/buses"
-                      // onClick={() => setMobileMenuOpen(false)}
+                      onClick={() => setMobileMenuOpen(false)}
                       className="block py-2 text-gray-600 hover:text-primary"
                     >
                       Buses
                     </Link>
                     <Link
                       to="/minibuses"
-                      // onClick={() => setMobileMenuOpen(false)}
+                      onClick={() => setMobileMenuOpen(false)}
                       className="block py-2 text-gray-600 hover:text-primary"
                     >
                       Mini Buses
                     </Link>
                     <Link
                       to="/coasters"
-                      // onClick={() => setMobileMenuOpen(false)}
+                      onClick={() => setMobileMenuOpen(false)}
                       className="block py-2 text-gray-600 hover:text-primary"
                     >
                       Coasters
