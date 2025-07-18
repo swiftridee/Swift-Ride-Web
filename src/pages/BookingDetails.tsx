@@ -88,11 +88,19 @@ const BookingDetails = () => {
   return (
     <>
       <Helmet>
-        <title>Booking Details - Swift Ride | View Your Rental Information</title>
-        <meta name="description" content="View detailed information about your Swift Ride booking including vehicle details, pickup/drop locations, and rental status." />
-        <meta name="keywords" content="booking details, Swift Ride booking, rental information, vehicle rental status" />
+        <title>
+          Booking Details - Swift Ride | View Your Rental Information
+        </title>
+        <meta
+          name="description"
+          content="View detailed information about your Swift Ride booking including vehicle details, pickup/drop locations, and rental status."
+        />
+        <meta
+          name="keywords"
+          content="booking details, Swift Ride booking, rental information, vehicle rental status"
+        />
       </Helmet>
-      
+
       <Navbar />
       <main className="min-h-screen bg-gray-50 pt-20">
         <div className="container mx-auto px-4 py-8">
@@ -145,7 +153,7 @@ const BookingDetails = () => {
                     <p>
                       <span className="font-medium">Type:</span>{" "}
                       {typeof booking.vehicle === "object"
-                        ? booking.vehicle.type
+                        ? booking.vehicle.vehicleType
                         : "Loading..."}
                     </p>
                   </div>
