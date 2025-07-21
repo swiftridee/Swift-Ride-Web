@@ -266,6 +266,7 @@ const BookingPage = () => {
           saveCard: paymentInfo.saveCard,
           paymentDate: paymentInfo.paymentDate,
           paymentStatus: paymentInfo.paymentStatus,
+          payment: calculateTotalPrice(),
           // Note: Full card number and CVV are not stored for security
         },
         sharedRide: enableSharedRide
@@ -275,12 +276,10 @@ const BookingPage = () => {
             }
           : undefined,
       };
-
       const response = await axios.post("/bookings", bookingData);
 
       if (response.data.success) {
         toast.success("Booking created successfully!");
-        // Navigate to the booking details page
         navigate(`/dashboard/bookings/${response.data.data._id}`);
       } else {
         toast.error(response.data.error || "Failed to create booking");
@@ -602,6 +601,7 @@ const BookingPage = () => {
                       name="email"
                       value={formData.email}
                       onChange={handleChange}
+                      disabled
                       className="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary"
                       required
                     />
