@@ -14,8 +14,8 @@ const CTASection = () => {
             Whether for personal travel, family trips, corporate events, or special occasions,
             we have the perfect vehicle for your needs.
           </p>
-          <div className="flex flex-wrap justify-center gap-4">
-            <Link to="/cars" className="btn-secondary text-lg px-8 py-3">
+          <div className="flex flex-wrap justify-center gap-4 item-center">
+            <Link to="/cars" className="btn-secondary text-lg px-8 py-3 flex flex-row justify-center items-center">
               Explore Vehicles
             </Link>
             <Link to="/contact" className="bg-white text-primary hover:bg-gray-100 py-3 px-8 rounded-md transition duration-300 font-medium text-lg">
