@@ -81,6 +81,42 @@ const BookingPage = () => {
     notes: "",
   });
 
+  // Auto-calculate return date/time based on rental plan and pickup
+  useEffect(() => {
+    if (!formData.pickupDate || !formData.pickupTime) return;
+    const pickupDateTime = new Date(`${formData.pickupDate}T${convertTo24Hour(formData.pickupTime)}:00`);
+    let returnDateTime = new Date(pickupDateTime);
+    switch (formData.rentalPlan) {
+      case "12hour":
+        returnDateTime.setHours(returnDateTime.getHours() + 12);
+        break;
+      case "2day":
+        returnDateTime.setDate(returnDateTime.getDate() + 2);
+        break;
+      case "3day":
+        returnDateTime.setDate(returnDateTime.getDate() + 3);
+        break;
+      case "1week":
+        returnDateTime.setDate(returnDateTime.getDate() + 7);
+        break;
+      default:
+        break;
+    }
+    // Format date as yyyy-mm-dd
+    const yyyy = returnDateTime.getFullYear();
+    const mm = String(returnDateTime.getMonth() + 1).padStart(2, '0');
+    const dd = String(returnDateTime.getDate()).padStart(2, '0');
+    const returnDate = `${yyyy}-${mm}-${dd}`;
+    // Format time as hh:mm AM/PM
+    let hours = returnDateTime.getHours();
+    const minutes = String(returnDateTime.getMinutes()).padStart(2, '0');
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12;
+    if (hours === 0) hours = 12;
+    const returnTime = `${hours}:${minutes} ${ampm}`;
+    setFormData((prev) => ({ ...prev, returnDate, returnTime }));
+  }, [formData.pickupDate, formData.pickupTime, formData.rentalPlan]);
+
   // Shared Ride State
   const [enableSharedRide, setEnableSharedRide] = useState(false);
   const [sharedRiderInfo, setSharedRiderInfo] = useState({
@@ -769,6 +805,7 @@ const BookingPage = () => {
                         new Date().toISOString().split("T")[0]
                       }
                       required
+                      disabled
                     />
                   </div>
 
@@ -786,6 +823,7 @@ const BookingPage = () => {
                       onChange={handleChange}
                       className="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary"
                       required
+                      disabled
                     >
                       <option value="">Select Return Time</option>
                       {timeOptions.map((time) => (
