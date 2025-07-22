@@ -96,9 +96,8 @@ export const useVehicles = ({
       setVehicles(mappedVehicles);
 
       // Update pagination info from response
-      const totalVehicles = response.data.total || 0;
+      const totalVehicles = response.data?.pagination?.total || 0;
       const totalPages = Math.ceil(totalVehicles / limit);
-      
       setPagination({
         currentPage: pageNum,
         totalPages,
