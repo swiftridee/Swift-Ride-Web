@@ -28,7 +28,7 @@ const Hero = () => {
           <div className="flex flex-wrap gap-4">
             <Link 
               to="/cars" 
-              className="btn-primary px-6 py-3 text-lg hover:scale-105 transition-transform duration-300 shadow-lg"
+              className="btn-primary flex flex-row justify-center items-center px-6 py-3 text-lg hover:scale-105 transition-transform duration-300 shadow-lg"
               aria-label="Book a ride now"
             >
               Book Now
