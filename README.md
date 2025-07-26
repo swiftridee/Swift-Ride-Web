@@ -56,7 +56,7 @@ Users receive timely email notifications for key actions, including:
 |---------------|----------------|
 | **🎉 Signup Confirmation** | Welcome email upon successful registration |
 | **✅ Booking Confirmation** | Email with booking details after a successful reservation |
-| **❌ Booking Cancellation** | Notification when a booking is cancelled |
+| **✅ Booking Cancellation** | Notification when a booking is cancelled |
 | **🔑 Forgot Password** | Email with instructions and OTP for password reset |
 | **🔐 OTP Verification** | Email containing a one-time password for secure verification |
 | **📰 Newsletter Subscription** | Confirmation email upon subscribing to the newsletter |
