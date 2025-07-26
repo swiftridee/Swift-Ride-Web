@@ -13,7 +13,7 @@ const features = [
   {
     icon: "fa-clock",
     title: "Flexible Durations",
-    description: "Choose from 12-hour rentals, 2-day, or 3-day plans based on your needs."
+    description: "Choose from 12-hour rentals, 2-day, 3-day, or 1-week plans based on your needs."
   },
   {
     icon: "fa-user-tie",

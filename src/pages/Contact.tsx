@@ -95,8 +95,14 @@ const Contact = () => {
                     <div>
                       <h3 className="font-medium mb-1">Our Location</h3>
                       <p className="text-gray-600">
-                        Swift Ride, Sargodha Road, Near Crescent Textile Mills,
-                        Faisalabad
+                        <a
+                          href="https://maps.app.goo.gl/JPDWwzHvayW6Nzdg7"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="hover:text-primary no-underline transition-colors"
+                        >
+                          Swift Ride, Sargodha Road, Near Crescent Textile Mills, Faisalabad
+                        </a>
                       </p>
                     </div>
                   </div>

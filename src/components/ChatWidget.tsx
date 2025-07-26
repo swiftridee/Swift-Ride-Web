@@ -23,7 +23,10 @@ const ChatWidget = () => {
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   
-  const toggleChat = () => setIsOpen(prev => !prev);
+  const toggleChat = () => {
+    console.log('Chat toggle clicked, current state:', isOpen);
+    setIsOpen(prev => !prev);
+  };
   
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInput(e.target.value);
@@ -31,6 +34,7 @@ const ChatWidget = () => {
   
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    console.log('Chat form submitted with input:', input);
     
     if (!input.trim()) return;
     
@@ -61,7 +65,7 @@ const ChatWidget = () => {
       } else if (lowerCaseInput.includes('cancel') || lowerCaseInput.includes('refund')) {
         response = "Cancellations made 48 hours before the scheduled pickup time will receive a full refund. Cancellations within 48 hours may be subject to a cancellation fee.";
       } else if (lowerCaseInput.includes('contact') || lowerCaseInput.includes('phone') || lowerCaseInput.includes('email')) {
-        response = "You can contact us at contactswiftride@gmail.com or call +92 (21) 1234-5678. Our office hours are Monday to Saturday 9:00 AM - 10:00 PM and Sunday 10:00 AM - 8:00 PM.";
+        response = "You can contact us at contactswiftride@gmail.com or call 0342-6988007 | 0309-7288942. Our office hours are Monday to Saturday 9:00 AM - 6:00 PM.";
       }
       
       const botMessage: Message = {
@@ -97,12 +101,18 @@ const ChatWidget = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
   
+  // Debug: Log when component mounts
+  useEffect(() => {
+    console.log('ChatWidget mounted');
+  }, []);
+  
   if (!isOpen) {
     return (
       <button
         onClick={toggleChat}
-        className="fixed bottom-6 right-6 bg-primary text-white p-3 rounded-full shadow-lg hover:bg-primary-dark transition-colors z-50"
+        className="fixed bottom-6 right-6 bg-primary text-white p-3 rounded-full shadow-lg hover:bg-primary-dark transition-colors z-[9999]"
         aria-label="Open chat"
+        style={{ zIndex: 9999 }}
       >
         <i className="fas fa-comments text-2xl"></i>
       </button>
@@ -110,7 +120,10 @@ const ChatWidget = () => {
   }
   
   return (
-    <div className="fixed bottom-6 right-6 w-80 sm:w-96 bg-white rounded-lg shadow-xl z-50 flex flex-col overflow-hidden max-h-[80vh]">
+    <div 
+      className="fixed bottom-6 right-6 w-80 sm:w-96 bg-white rounded-lg shadow-xl z-[9999] flex flex-col overflow-hidden max-h-[80vh]"
+      style={{ zIndex: 9999 }}
+    >
       {/* Chat Header */}
       <div className="bg-primary text-white p-4 flex justify-between items-center">
         <h3 className="font-semibold">Swift Ride Support</h3>
@@ -169,20 +182,24 @@ const ChatWidget = () => {
       
       {/* Chat Input */}
       <form onSubmit={handleSubmit} className="border-t p-4 flex items-center">
-        <input
-          type="text"
-          value={input}
-          onChange={handleInputChange}
-          placeholder="Type a message..."
-          className="flex-1 border border-gray-300 rounded-l-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-        />
-        <button
-          type="submit"
-          className="bg-primary text-white px-4 py-2 rounded-r-lg hover:bg-primary-dark transition-colors"
-          disabled={!input.trim()}
-        >
-          <i className="fas fa-paper-plane"></i>
-        </button>
+        <div className="flex w-full rounded-full border border-primary focus-within:ring-2 focus-within:ring-primary bg-white overflow-hidden shadow-sm">
+          <input
+            type="text"
+            value={input}
+            onChange={handleInputChange}
+            placeholder="Type a message..."
+            className="flex-1 px-4 py-2 bg-transparent border-none focus:outline-none text-gray-800 placeholder-gray-400"
+            style={{ minHeight: '40px' }}
+          />
+          <button
+            type="submit"
+            className="bg-primary text-white px-4 flex items-center justify-center transition-colors hover:bg-primary-dark disabled:bg-primary/60"
+            style={{ minHeight: '40px', borderTopRightRadius: '9999px', borderBottomRightRadius: '9999px' }}
+            disabled={!input.trim()}
+          >
+            <i className="fas fa-paper-plane"></i>
+          </button>
+        </div>
       </form>
     </div>
   );

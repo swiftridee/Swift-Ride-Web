@@ -19,16 +19,16 @@ const categoryData = [
   {
     title: "Mini Buses",
     description: "Medium sized buses ideal for moderate groups and tours.",
-    image: "https://images.unsplash.com/photo-1586636186520-da88997ce36c?q=80&w=2940&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?q=80&w=800&auto=format&fit=crop", // Mini bus that fits card
     link: "/minibuses",
     icon: "fa-shuttle-van"
   },
   {
     title: "Coasters",
     description: "Compact and versatile coasters for small to medium sized groups.",
-    image: "https://images.unsplash.com/photo-1543984613-f55ca6a1ba35?q=80&w=2805&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1570125909232-eb263c188f7e?q=80&w=800&auto=format&fit=crop", // Working coaster image
     link: "/coasters",
-    icon: "fa-truck"
+    icon: "fa-bus"
   }
 ];
 

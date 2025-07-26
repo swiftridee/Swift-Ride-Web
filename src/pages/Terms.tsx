@@ -249,7 +249,7 @@ const Terms = () => {
             <section>
               <h2 className="text-xl font-bold mb-4">11. Contact Information</h2>
               <p>For queries or complaints regarding these Terms, contact us:</p>
-              <address className="not-italic bg-gray-50 p-4 rounded-lg">
+              <address className="not-italic">
                 <div className="mb-2">
                   <span className="font-semibold">Swift Ride</span>
                 </div>

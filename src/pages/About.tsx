@@ -132,7 +132,7 @@ const About = () => {
               <div className="text-center">
                 <div className="rounded-full overflow-hidden w-40 h-40 mx-auto mb-4 bg-gray-200 flex items-center justify-center">
                   <img 
-                    src="/images/team/sajid-ali.jpg" 
+                    src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=2787&auto=format&fit=crop&ixlib=rb-4.0.3" 
                     alt="Sajid Ali" 
                     className="w-full h-full object-cover"
                     onError={(e) => {
