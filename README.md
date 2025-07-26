@@ -104,8 +104,8 @@ Users receive timely email notifications for key actions, including:
 
 1. **📥 Clone the repository:**
    ```bash
-   git clone <YOUR_GIT_URL>
-   cd <YOUR_PROJECT_NAME>
+git clone <YOUR_GIT_URL>
+cd <YOUR_PROJECT_NAME>
    ```
 
 2. **📦 Install dependencies:**
@@ -123,7 +123,7 @@ Users receive timely email notifications for key actions, including:
 
 4. **▶️ Start the development server:**
    ```bash
-   npm run dev
+npm run dev
    # or
    yarn dev
    ```
